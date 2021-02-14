@@ -1,0 +1,111 @@
+@CHARSET "UTF-8";
+
+/*
+* CSS Document copyright (c) 2012 Tynarus.com, all rights reserved.
+*/
+
+.manual {
+	width: 504px;
+	margin-left: -2px;
+}
+.manual img {
+	width: 95px;
+	height: 65px;
+}
+.manual td {
+	padding-top: 13px;
+	vertical-align: top;
+	text-align: left;
+}
+.manual td .frame, .rules td .frame {
+	width: 236px;
+}
+.stoneBox {
+	margin-bottom: 3px;
+}
+
+.manualSection {
+	width: 216px;
+	height: 65px;
+	margin: 3px auto;
+}
+.w200 {
+	width: 200px;
+}
+.stoneBox150 {
+	margin: 0px auto 3px auto;
+	width: 139px;
+}
+.stoneBox95 {
+	width: 84px;
+}
+.manualSectionRight {
+	padding: 2px 0 0 2px;
+	margin-left: 99px;
+}
+
+.aboutSection {
+	height: 99px;
+	padding: 2px;
+}
+.aboutSection img {
+	margin: 1px;
+}
+.aboutSection .stoneBox {
+	white-space: nowrap;
+	margin-bottom: 4px;
+}
+
+.rules td {
+	padding-top: 2px;
+	width: 250px;
+	vertical-align: top;
+}
+.rules td.full {
+	width: 100%;
+}
+.rules .frame {
+	margin: 0 auto;
+}
+.rules .innerFrame {
+	margin: 0 auto;
+	padding: 6px;
+}
+.rules .rulesLeft {
+	float: left;
+	width: 100px;
+}
+.rules img {
+	width: 100px;
+	height: 75px;
+	display: block;
+	margin-top: 5px;
+}
+.rules .rulesRight {
+	margin: 2px 0 2px 105px;
+}
+.rules .stoneBox {
+	margin: 2px;
+}
+
+#controls, #skills {
+	text-align: center;
+}
+#controls a, #skills a {
+	color: #FFFFFF;
+}
+#controls .spacer {
+	display: block;
+	height: 10px;
+}
+#skills .spacer {
+	display: block;
+	height: 4px;
+}
+#skills hr {
+	width: 30%;
+}
+
+.brownBg {
+	background-color: #382418;
+}
