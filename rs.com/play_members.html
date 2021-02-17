@@ -16,6 +16,37 @@
          .c {text-decoration:none}
          A.c:hover {text-decoration:underline}
       </style>
+      <script>
+         window.addEventListener("load", function(){
+            let gameLoading = document.getElementById("game-loading");
+            let gamePlay = document.getElementById("game-play");
+            let gameMusic = document.getElementById("game-music");
+            let fixMusic = document.getElementById("fix-music");
+
+            gameLoading.addEventListener("ended", function(){
+               gameLoading.style.display = "none"
+               gamePlay.style.display = "inline"
+               gamePlay.play()
+            });
+
+            // Source: https://stackoverflow.com/questions/49939436/how-to-detect-if-chrome-safari-firefox-prevented-autoplay-for-video
+            let promise = gameMusic.play();
+
+            if (promise !== undefined) {
+               promise.then(_ => {
+                  // Autoplay started!
+               }).catch(error => {
+                  // Autoplay not allowed!
+                  // Show something in the UI that the video is muted
+                  fixMusic.css.display = "inline"
+                  fixMusic.onclick = function (){
+                     fixMusic.css.display = "none"
+                     gameMusic.play();
+                  };
+               });
+            }
+         });
+      </script>
    </head>
    <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin: 0;" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0"
       onload=startloop();>
@@ -45,12 +76,23 @@
          </tr>
          <tr>
             <td align=center>
-               <video width="760" height="503" autoplay loop>
-				<source src="../mp4/output.x264.mp4" type="video/mp4">
-				<source src="../mp4/output.x265.mp4" type="video/mp4">
-				Your browser does not support the video tag.
-			</video
+               <video id="game-loading" width="760" height="503" autoplay muted>
+                  <source src="../media/mp4/loading.x264.mp4" type="video/mp4">
+                  <source src="../media/mp4/loading.x265.mp4" type="video/mp4" codecs=hevc">
+                  Your browser does not support the video tag.
+               </video>
+               <video id="game-play" width="760" height="503" loop muted style="display: none">
+                  <source src="../media/mp4/play.x264.mp4" type="video/mp4">
+                  <source src="../media/mp4/play.x265.mp4" type="video/mp4" codecs=hevc">
+                  Your browser does not support the video tag.
+               </video>
+               <audio id="game-music" src="../media/audio/scape_main.aac" loop style="display: none">  </audio>
+            </td>
+         </tr>
+         <tr align=center>
             <td>
+               <button id="fix-music" style="display: none">Music not playing? Click here to fix it.</button>
+            </td>
          </tr>
       </table>
       <bgsound id=midibox loop=0 volume=0 autostart=yes>
