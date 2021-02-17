@@ -38,10 +38,10 @@
                }).catch(error => {
                   // Autoplay not allowed!
                   // Show something in the UI that the video is muted
-                  fixMusic.css.display = "inline"
-                  fixMusic.onclick = function (){
-                     fixMusic.css.display = "none"
-                     gameMusic.play();
+                  fixMusic.style.display = "inline"
+                  fixMusic.onclick = function (gameMusic){
+                     fixMusic.style.display = "none"
+                     document.getElementById("game-music").play();
                   };
                });
             }
