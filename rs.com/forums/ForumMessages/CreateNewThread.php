@@ -1,38 +1,37 @@
 <?php 
 include "../../UserActivity.php";
 session_start();
+$category = urldecode($_GET['category']);
+$page = $_GET['page'];
 if (isset($_POST["add"])){
     include "../../connect.php";
     
     $title = $_POST["title"];
     $message = htmlspecialchars(nl2br($_POST["message"]));
-    $category = urldecode($_GET['category']);
     date_default_timezone_set('Australia/Perth');
-
+ 
     $stmt= $conn->prepare("SELECT userID FROM users WHERE username = ?");
     $stmt->bind_param("s", $_SESSION['username']);
     $stmt->execute();   
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
-
+ 
     $n = 1;
     $statement = $conn->prepare("INSERT INTO threads (title,category,author,last_author,`page`) VALUES (?,?,?,?,?)");
     $statement->bind_param("ssiii",$title, $category,$user['userID'],$user['userID'],$n);
     $statement->execute();
     $last_id = $conn->insert_id;
-    $n = 1;
-  
-    $images = json_encode($images);
+   
     $statement = $conn->prepare("INSERT INTO replies (threadID,author,reply,originalPost,`page`) VALUES (?, ?, ?, ?, ?)");
-    $statement->bind_param("issii",$_GET['threadID'],$user['userID'],$message,$n,$_GET['page']);
+    $statement->bind_param("issii",$last_id,$user['userID'],$message,$n,$_GET['page']);
     $statement->execute();
-
+ 
     mysqli_close($conn);
     header("Location: ../ForumThread/forumthread.php?threadID=$last_id&page=1");
 } 
 ?>
 <html>
-
+ 
 <head>
 <script type="text/javascript">
 function textLengthTitle(){
@@ -52,7 +51,7 @@ function setTextToCurrentPos(areaId, text) {
   if (!txtarea) {
     return;
   }
-
+ 
   var scrollPos = txtarea.scrollTop;
   var strPos = 0;
   var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
@@ -65,7 +64,7 @@ function setTextToCurrentPos(areaId, text) {
   } else if (br == "ff") {
     strPos = txtarea.selectionStart;
   }
-
+ 
   var front = (txtarea.value).substring(0, strPos);
   var back = (txtarea.value).substring(strPos, txtarea.value.length);
   txtarea.value = front + text + back;
@@ -82,11 +81,11 @@ function setTextToCurrentPos(areaId, text) {
     txtarea.selectionEnd = strPos;
     txtarea.focus();
   }
-
+ 
   txtarea.scrollTop = scrollPos;
 }
 </script>
-
+ 
    <STYLE>
       <!--
       A {
@@ -106,9 +105,9 @@ function setTextToCurrentPos(areaId, text) {
    <link media="all" type="text/css" rel="stylesheet" href="css/main.css">
    <link href="css/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
-
+ 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
-
+ 
 <div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
     <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
         <div style="float: left;">
@@ -124,7 +123,7 @@ function setTextToCurrentPos(areaId, text) {
         <?php endif?>
     </div>
 <div>
-
+ 
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
          <td valign=middle>
@@ -167,7 +166,7 @@ function setTextToCurrentPos(areaId, text) {
                                        <br>
                                        <a href="../ForumBoard/forumboard.php?category=<?php echo urlencode($_GET['category']);?>&page=<?php echo ($_GET['page']);?>" class="c">Back to threads page</a>
                                        <br>
-                                       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+                                       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']."?category=$category&page=$page");?>" method="POST">
                                        <br>Thread Title: <input size="40" id="charlimit_text_b" name="title" maxlength="60" onkeyup="textLengthTitle();">
                                        <table width=0 bgcolor=black cellpadding=0 border=0>
                                           <div class="commandtwo" colspan="2">
@@ -235,7 +234,7 @@ function setTextToCurrentPos(areaId, text) {
    </tbody>
    </table>
 </body>
-
+ 
 </html>
-
+ 
 </html>
