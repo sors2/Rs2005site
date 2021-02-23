@@ -31,7 +31,7 @@ if(isset($_POST['check']))
     }
 }
 ?>
-
+ 
 <title>RuneScape - the massive online adventure game by Jagex Ltd</title>
 <STYLE>
    BODY,
@@ -40,110 +40,110 @@ if(isset($_POST['check']))
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
    }
-
+ 
    .b {
       border-style:
          outset;
       border-width: 3pt;
       border-color: #373737
    }
-
+ 
    .b2 {
       border-style: outset;
       border-width: 3pt;
       border-color: #570700
    }
-
+ 
    .e {
       border: 2px solid #382418
    }
-
+ 
    .c {
       text-decoration: none
    }
-
+ 
    A.c:hover {
       text-decoration: underline
    }
-
+ 
    .white {
       text-decoration: none;
       color: #FFFFFF;
    }
-
+ 
    .red {
       text-decoration: none;
       color: #E10505;
    }
-
+ 
    .lblue {
       text-decoration: none;
       color: #9DB8C3;
    }
-
+ 
    .dblue {
       text-decoration: none;
       color: #0D6083;
    }
-
+ 
    .yellow {
       text-decoration: none;
       color: #FFE139;
    }
-
+ 
    .green {
       text-decoration: none;
       color: #04A800;
    }
-
+ 
    .purple {
       text-decoration: none;
       color: #C503FD;
    }
-
+ 
    .pink {
       text-decoration: none;
       color: #FAA8AA;
    }
-
+ 
    A.c:hover {
       text-decoration: underline
    }
-
+ 
    A.white:hover {
       text-decoration: underline
    }
-
+ 
    A.red:hover {
       text-decoration: underline
    }
-
+ 
    A.lblue:hover {
       text-decoration: underline
    }
-
+ 
    A.dblue:hover {
       text-decoration: underline
    }
-
+ 
    A.yellow:hover {
       text-decoration: underline
    }
-
+ 
    A.green:hover {
       text-decoration: underline
    }
-
+ 
    A.purple:hover {
       text-decoration: underline
    }
-
+ 
    A.pink:hover {
       text-decoration: underline
    }
 </STYLE>
 </head>
-
+ 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
@@ -151,12 +151,12 @@ if(isset($_POST['check']))
             <center>
                <table cellpadding=0 cellspacing=0>
                   <tr>
-                     <td valign=top><img src=../../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
                   </tr>
                </table>
-               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../../img/background2.jpg>
+               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../img/background2.jpg>
                   <tr>
                      <td valign=bottom>
                         <center>
@@ -219,7 +219,7 @@ if(isset($_POST['check']))
                                                       <TR>
                                                       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
                                                          <TD>Desired Username:</TD>
-                                                         <TD><INPUT maxLength=12 value="<?php if(isset($_SESSION['temp_user'])):?><?php echo $_SESSION['temp_user'];?><?php endif?>" name=username></TD>
+                                                         <TD><INPUT maxLength=12 value="" name=username></TD>
                                                       </TR>
                                                       <tr>
                                                          <td></td>
@@ -244,7 +244,7 @@ if(isset($_POST['check']))
                <table cellpadding=0 cellspacing=0>
                   <tr>
                      <td valign=bottom>
-                        <img src=../../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
+                        <img src=../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
                      </td>
                      <td valign=bottom>
                         <div align=center style="font-family:Arial,Helvetica,sans-serif; font-size:11px;">
@@ -253,14 +253,14 @@ if(isset($_POST['check']))
                               class=c>Terms+Conditions</a> + <a href="frame2.cgi?page=privacy/privacy.html"
                               class=c>Privacy policy</a>
                         </div>
-                        <img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
+                        <img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
                      </td>
                      <td valign=bottom>
-                        <img src=../../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
+                        <img src=../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
                      </td>
                   </tr>
                </table>
             </center>
 </body>
-
+ 
 </html>

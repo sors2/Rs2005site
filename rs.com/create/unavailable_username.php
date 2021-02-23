@@ -44,7 +44,7 @@ if(isset($_POST['suggested_check'])){
  This function will generate a random username based on the inputed username from the create username page.
  It adds randomly generated numbers to the end of the username to try and make it unique. It uses the other
  function "username_exists_in_database()" to make sure the usernames displayed are unqiue.
-
+ 
  @param
  $string_name : Is the username that was inputed previously and is unavailable.
  $random_no : number range for the generated usernames. e.g. 0 to $random_no.
@@ -70,13 +70,13 @@ function generate_unique_username($string_name, $rand_no){
 <?php 
 /*
  This function checks the current databse to see if the random username is unique.
-
+ 
  @param
  $username : random generated username
 */
 function username_exist_in_database($username){
     include "../connect.php"; //connect to database
-
+ 
     if ($conn->connect_error) {
         die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
     }
@@ -103,110 +103,110 @@ function username_exist_in_database($username){
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
    }
-
+ 
    .b {
       border-style:
          outset;
       border-width: 3pt;
       border-color: #373737
    }
-
+ 
    .b2 {
       border-style: outset;
       border-width: 3pt;
       border-color: #570700
    }
-
+ 
    .e {
       border: 2px solid #382418
    }
-
+ 
    .c {
       text-decoration: none
    }
-
+ 
    A.c:hover {
       text-decoration: underline
    }
-
+ 
    .white {
       text-decoration: none;
       color: #FFFFFF;
    }
-
+ 
    .red {
       text-decoration: none;
       color: #E10505;
    }
-
+ 
    .lblue {
       text-decoration: none;
       color: #9DB8C3;
    }
-
+ 
    .dblue {
       text-decoration: none;
       color: #0D6083;
    }
-
+ 
    .yellow {
       text-decoration: none;
       color: #FFE139;
    }
-
+ 
    .green {
       text-decoration: none;
       color: #04A800;
    }
-
+ 
    .purple {
       text-decoration: none;
       color: #C503FD;
    }
-
+ 
    .pink {
       text-decoration: none;
       color: #FAA8AA;
    }
-
+ 
    A.c:hover {
       text-decoration: underline
    }
-
+ 
    A.white:hover {
       text-decoration: underline
    }
-
+ 
    A.red:hover {
       text-decoration: underline
    }
-
+ 
    A.lblue:hover {
       text-decoration: underline
    }
-
+ 
    A.dblue:hover {
       text-decoration: underline
    }
-
+ 
    A.yellow:hover {
       text-decoration: underline
    }
-
+ 
    A.green:hover {
       text-decoration: underline
    }
-
+ 
    A.purple:hover {
       text-decoration: underline
    }
-
+ 
    A.pink:hover {
       text-decoration: underline
    }
 </STYLE>
 </head>
-
+ 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
@@ -214,12 +214,12 @@ function username_exist_in_database($username){
             <center>
                <table cellpadding=0 cellspacing=0>
                   <tr>
-                     <td valign=top><img src=../../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
                   </tr>
                </table>
-               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../../img/background2.jpg>
+               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../img/background2.jpg>
                   <tr>
                      <td valign=bottom>
                         <center>
@@ -228,7 +228,7 @@ function username_exist_in_database($username){
                                  <td class=e>
                                     <center>
                                        <b>Create Account</b><br>
-                                       <a href="../title.html" class=c>Main Menu</a>
+                                       <a href="../title.php" class=c>Main Menu</a>
                                     </center>
                                  </td>
                               </tr>
@@ -336,7 +336,7 @@ function username_exist_in_database($username){
    <table cellpadding=0 cellspacing=0>
       <tr>
          <td valign=bottom>
-            <img src=../../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
+            <img src=../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
          </td>
          <td valign=bottom>
             <div align=center style="font-family:Arial,Helvetica,sans-serif; font-size:11px;">
@@ -345,14 +345,14 @@ function username_exist_in_database($username){
                   class=c>Terms+Conditions</a> + <a href="frame2.cgi?page=privacy/privacy.html" class=c>Privacy
                   policy</a>
             </div>
-            <img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
+            <img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
          </td>
          <td valign=bottom>
-            <img src=../../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
+            <img src=../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
          </td>
       </tr>
    </table>
    </center>
 </body>
-
+ 
 </html>
