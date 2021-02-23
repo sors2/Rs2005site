@@ -30,7 +30,6 @@ if(isset($_POST['create']) && isset($_POST['choice']))
                 $stmt->bind_param('sssii',$user,$hash_pass,$email, $last_id, $n);
                 $stmt->execute();
  
-                $_SESSION['username'] = $user;
                 unset($_SESSION['temp_user']);
                 mysqli_close($conn);
                 header('Location: finish.html');
