@@ -147,7 +147,7 @@
                                     <center>
                                        <table cellspacing=0 cellpadding=2 border=1 BORDERCOLOR=#282318>
                                           <tr>
-                                             <td style="background-color:#282318;" height=20px;><a href="index.html"
+                                             <td style="background-color:#282318;" height=20px;><a href="index.php"
                                                    class=c>Choose A Username</a></td>
                                              <td> > </td>
                                              <td style="background-color:#35210F;"><b>
