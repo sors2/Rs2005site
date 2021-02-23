@@ -20,7 +20,7 @@ if(isset($_POST['check']))
                 $result = $stmt->get_result();
           if (mysqli_num_rows($result)==0) 
           {
-              $_SESSION["username_temp"] = $user;
+              $_SESSION["temp_user"] = $user;
               header('Location: terms.php');
               mysqli_close($conn);
           }
