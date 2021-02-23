@@ -35,7 +35,7 @@ if (isset($_POST["login"])){
                 $statement = $conn->prepare("UPDATE users SET last_activity = ? WHERE userID = ?");
                 $statement->bind_param("si",$dt,$user['userID']);
                 $statement->execute();
-                header('Location: title.php');
+                header('Location: securemenu/securemenu.php');
                 
             }
             else{
