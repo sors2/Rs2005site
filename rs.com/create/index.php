@@ -6,8 +6,13 @@ if(isset($_POST['check']))
 {
     include "../connect.php";
     $user = trim($_POST['username']);
+    $user = ucfirst($user);
+    $user = str_replace("_"," ",$user);
     if(strlen($user) > 12){
       $err["length_error"] = "Username must be less then 12 characters.";
+    }
+    else if(empty($user)){
+      $err["length_error"] = "Username can not be empty.";
     }
     elseif(strcmp(substr($user,0,4),"mod ")==0 || strcmp(substr($user,0,4),"Mod ")==0 || strcmp(substr($user,0,10),"moderator ")==0 || strcmp(substr($user,0,10),"Moderator ")==0 ||
     strcmp($user,"mod")==0 || strcmp($user,"Mod")==0 || strcmp($user,"moderator")==0 || strcmp($user,"Moderator")==0){
@@ -151,12 +156,12 @@ if(isset($_POST['check']))
             <center>
                <table cellpadding=0 cellspacing=0>
                   <tr>
-                     <td valign=top><img src=../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
                   </tr>
                </table>
-               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../img/background2.jpg>
+               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../../img/background2.jpg>
                   <tr>
                      <td valign=bottom>
                         <center>
@@ -221,6 +226,10 @@ if(isset($_POST['check']))
                                                          <TD>Desired Username:</TD>
                                                          <TD><INPUT maxLength=12 value="" name=username></TD>
                                                       </TR>
+                                                      <TR>
+                                                         <TD></TD>
+                                                         <TD style="float:left;"><font color="#ffbb22"><?php echo $err["length_error"];?><?php echo $err["invalid_error"];?></font></TD>
+                                                      </TR>
                                                       <tr>
                                                          <td></td>
                                                          <td align=left>
@@ -244,7 +253,7 @@ if(isset($_POST['check']))
                <table cellpadding=0 cellspacing=0>
                   <tr>
                      <td valign=bottom>
-                        <img src=../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
+                        <img src=../../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
                      </td>
                      <td valign=bottom>
                         <div align=center style="font-family:Arial,Helvetica,sans-serif; font-size:11px;">
@@ -253,10 +262,10 @@ if(isset($_POST['check']))
                               class=c>Terms+Conditions</a> + <a href="frame2.cgi?page=privacy/privacy.html"
                               class=c>Privacy policy</a>
                         </div>
-                        <img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
+                        <img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
                      </td>
                      <td valign=bottom>
-                        <img src=../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
+                        <img src=../../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
                      </td>
                   </tr>
                </table>

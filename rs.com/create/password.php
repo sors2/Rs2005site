@@ -5,52 +5,54 @@ if(!isset($_SESSION['temp_user'])){
 }
  
 $err = array("pass_error" => "","terms_error"=>"","email_error" => "","confirm_error" => "");
-if(isset($_POST['create']) && isset($_POST['choice']))
+if(isset($_POST['create']))
 {
-    include "../connect.php";
-    $pass1 = $_POST['password1'];
-    $pass2 = $_POST['password2'];
-    $email = $_POST['email'];
-    preg_match('/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD',$email,$matches);
-    if(strcmp($pass1,$pass2) == 0){   
-        if(!empty($matches)){
-            if(strlen($pass1) >= 5 & strlen($pass1) <= 20)
-            {
+   if(isset($_POST['choice'])){
+               include "../connect.php";
+               $pass1 = $_POST['password1'];
+               $pass2 = $_POST['password2'];
+               $email = $_POST['email'];
+               preg_match('/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD',$email,$matches);
+               if(strcmp($pass1,$pass2) == 0){   
+                  if(!empty($matches)){
+                        if(strlen($pass1) >= 5 & strlen($pass1) <= 20)
+                        {
  
-                $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
+                           $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
  
-                $stmt = $conn->prepare("INSERT INTO pastpasswords (password3) VALUES (?)");
-                $stmt->bind_param("s",$hash_pass);
-                $stmt->execute();
-                $last_id = $conn->insert_id; 
+                           $stmt = $conn->prepare("INSERT INTO pastpasswords (password3) VALUES (?)");
+                           $stmt->bind_param("s",$hash_pass);
+                           $stmt->execute();
+                           $last_id = $conn->insert_id; 
  
-                $user = $_SESSION['temp_user'];
-                $n = 1;
-                $stmt = $conn->prepare("INSERT INTO users (username,user_password,email,past_passwords,rolesID) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param('sssii',$user,$hash_pass,$email, $last_id, $n);
-                $stmt->execute();
+                           $user = $_SESSION['temp_user'];
+                           $n = 1;
+                           $stmt = $conn->prepare("INSERT INTO users (username,user_password,email,past_passwords,rolesID) VALUES (?, ?, ?, ?, ?)");
+                           $stmt->bind_param('sssii',$user,$hash_pass,$email, $last_id, $n);
+                           $stmt->execute();
  
-                unset($_SESSION['temp_user']);
-                mysqli_close($conn);
-                header('Location: finish.html');
-                
-            }
+                           $_SESSION['username'] = $user;
+                           unset($_SESSION['temp_user']);
+                           mysqli_close($conn);
+                           header('Location: finish.html');
+                           
+                        }
  
-            else{
-                $err["pass_error"] = 'password is too long or short.';
-            }
-        }
-        else{
-            $err["email_error"] = 'Invalid email address.';
-        }
-    }
-    else{
-        $err["confirm_error"] = 'passwords must match.';
-    }
-    
-}
-else{
-    $err["terms_error"] = 'Must agree with the terms & conditions.';
+                        else{
+                           $err["pass_error"] = 'password is too long or short.';
+                        }
+                  }
+                  else{
+                        $err["email_error"] = 'Invalid email address.';
+                  }
+               }
+               else{
+                  $err["confirm_error"] = 'passwords must match.';
+               }
+   }   
+   else{
+      $err["terms_error"] = 'Must agree with the terms & conditions.';
+  }  
 }
 ?>
 <title>RuneScape - the massive online adventure game by Jagex Ltd</title>
@@ -172,12 +174,12 @@ else{
             <center>
                <table cellpadding=0 cellspacing=0>
                   <tr>
-                     <td valign=top><img src=../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
-                     <td valign=top><img src=../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../../img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
+                     <td valign=top><img src=../../../img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
                   </tr>
                </table>
-               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../img/background2.jpg>
+               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../../img/background2.jpg>
                   <tr>
                      <td valign=bottom>
                         <center>
@@ -245,8 +247,11 @@ else{
                                              <td>
                                                 <INPUT maxLength=12 value="" type="password" name=password1>
                                              </td>
+                                          </tr>
+                                          <tr>
+                                             <td></td>
                                              <td>
-                                                <?php echo $err['confirm_error'];?>
+                                                <font color="#ffbb22"><?php echo $err['pass_error'];?><?php echo $err['confirm_error'];?></font>
                                             </td>
                                           </tr>
                                           <tr>
@@ -264,10 +269,12 @@ else{
                                             <td>
                                                 <INPUT maxLength=60 value="" name=email>
                                             </td>
-                                            <td>
-                                                <?php echo $err['email_error'];?>
+                                          </tr>
+                                          <tr>
+                                             <td></td>
+                                             <td>
+                                                <font color="#ffbb22"><?php echo $err['email_error'];?></font>
                                             </td>
-                                            </tr>
                                           <tr>
                                              <td>
                                                 I agree with the terms and conditions:
@@ -275,10 +282,12 @@ else{
                                              <td>
                                                 <input type="checkbox" value="yes" name="choice" id="choice">
                                              </td>
-                                             <td>
-                                                <?php echo $err['terms_error'];?>
-                                            </td>
                                           </tr>
+                                          <tr>
+                                             <td></td>
+                                             <td>
+                                                <font color="#ffbb22"><?php echo $err['terms_error'];?></font>
+                                            </td>
                                           <tr>
                                              <td></td>
                                              <td>
@@ -299,7 +308,7 @@ else{
                <table cellpadding=0 cellspacing=0>
                   <tr>
                      <td valign=bottom>
-                        <img src=../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
+                        <img src=../../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
                      </td>
                      <td valign=bottom>
                         <div align=center style="font-family:Arial,Helvetica,sans-serif; font-size:11px;">
@@ -308,10 +317,10 @@ else{
                               class=c>Terms+Conditions</a> + <a href="frame2.cgi?page=privacy/privacy.html"
                               class=c>Privacy policy</a>
                         </div>
-                        <img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
+                        <img src=../../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
                      </td>
                      <td valign=bottom>
-                        <img src=../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
+                        <img src=../../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
                      </td>
                   </tr>
                </table>
