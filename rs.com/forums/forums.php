@@ -156,7 +156,7 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
                                                       <?php echo $total_online;?> users online</font>
                                                    <?php endif?>
                                              </b><br>
-                                             <a href="ForumOptions/ForumMods/ForumMods.html" class="c">
+                                             <a href="ForumOptions/ForumMods/ForumMods.php" class="c">
                                                 <font color="#FFFFFF">
                                                    <font color="#90C040">Forum Moderators</font>
                                                 </font>

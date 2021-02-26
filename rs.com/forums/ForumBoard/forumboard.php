@@ -76,7 +76,7 @@ $counter = 0;
         $locked = "";
         if($row['isSticky'])
         {
-                $sticky = '<img src="../ForumBoard/img/stickied.png" width="13" height="13" alt="" title="" />';   
+                $sticky = '<img src="img/stickied.png" width="13" height="13" alt="" title="" />';   
         }
         if($row['isLocked'])
         {

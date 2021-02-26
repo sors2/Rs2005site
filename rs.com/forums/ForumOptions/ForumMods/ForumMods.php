@@ -99,7 +99,7 @@
                               <tr>
                                  <td class=e>
                                     <center><b>Moderators</b>
-                                       <br><a href="../../forums.htm" class="c">back to forums home</a>
+                                       <br><a href="../../forums.php" class="c">back to forums home</a>
                                     </center>
                                     <br><b>Jagex Staff Moderators:</b>
                         </center>

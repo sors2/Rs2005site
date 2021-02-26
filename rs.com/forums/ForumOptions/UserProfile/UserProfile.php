@@ -167,7 +167,7 @@
                                  <td class=e>
                                     <center>
                                        <b>Forum Profile - <?php echo $_SESSION['username'];?></b>
-                                       <br><a href="../../Forums.php" class="c">back to forums home</a>
+                                       <br><a href="../../forums.php" class="c">back to forums home</a>
                                        <br>
                                        <br><b>
                                           <div style="text-align: left; background: none;">
