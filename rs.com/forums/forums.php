@@ -145,7 +145,7 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
                                  <tbody>
                                     <tr>
                                        <td class="e">
-                                          <center><b><a href="forums.htm" class="c"><img class="imiddle" title="Refresh"
+                                          <center><b><a href="forums.php" class="c"><img class="imiddle" title="Refresh"
                                                       alt="Refresh" src="ForumsHomepage_files/refresh.png" height="13"
                                                       hspace="0" border="0" width="13"></a>
                                                 <font color="#FFFFFF">RuneScape Forums</font><br>

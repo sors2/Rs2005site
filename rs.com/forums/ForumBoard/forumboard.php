@@ -90,7 +90,7 @@ $counter = 0;
         $hide="";
         if(isset($_SESSION['permission']) && $_SESSION['permission'] > 1){
                 $tools = '<a href="../../playermodcentre/PlayerModCentre/ModForum/Escalate/EscalateBoard.php?threadID='.$row["threadID"].'">Escalate</a>' ;
-                $hide = '<a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModBoard/HideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/hide.png" alt="" title="hide" height="15" width="30"></a> <a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModboard/UnhideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/unhide.png" alt="" title="unhide" height="15" width="30"></a>';
+                $hide = '<a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModBoard/HideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/hide.png" alt="" title="hide" height="15" width="30"></a> <a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModBoard/UnhideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/unhide.png" alt="" title="unhide" height="15" width="30"></a>';
         }
         if($row['hidden'] == 1){
 
