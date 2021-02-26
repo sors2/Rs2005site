@@ -55,7 +55,9 @@ $dates = $list;
 
         <?php
 
-        $result = mysqli_query($conn, "SELECT COUNT(category) as total ,category,last_reply FROM threads GROUP BY category");
+$result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(last_reply) as last_post
+                               FROM threads 
+                               GROUP BY category");
         while($row = mysqli_fetch_assoc($result)){
                 $list[$row['category']] = $row['total'];
                 $date = strtotime($row['last_reply']);
