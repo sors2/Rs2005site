@@ -217,7 +217,7 @@ mysqli_close($conn);
                               <tr>
                                  <td class=e>
                                     <center><a href="forumboard.php?category=<?php echo urldecode($_GET['category']);?>"><img class="imiddle" title="Refresh" alt="Refresh"
-                                             src="../forumboard/img/refresh.png" hspace="0" height="13" border="0"
+                                             src="img/refresh.png" hspace="0" height="13" border="0"
                                              width="13"></a> <b>Runescape Forums - <?php echo urldecode($_GET['category']);?></b>
                                        <br><a href="../forums.php" class="c">Back to forums home</a>
                                        <?php if(isset($_SESSION['username'])) :?>
