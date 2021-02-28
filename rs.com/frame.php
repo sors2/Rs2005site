@@ -1,3 +1,8 @@
+<script type="text/JavaScript">
+
+if (top.location != location) top.location.href = location.href;
+</script>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
 <html>
    <head>
