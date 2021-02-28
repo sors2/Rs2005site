@@ -1,5 +1,5 @@
 <?php
     session_start();
     unset($_SESSION['username']);
-    header('Location: title.php');
+    header('Location: runescape.html');
 ?>
