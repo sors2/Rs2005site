@@ -62,7 +62,7 @@ if (isset($_POST["login"])){
 <script>
 function breakout() {
   if (window.top != window.self) {
-    window.top.location = "frame.html";
+    window.top.location = "frame.php";
   }
 }
 </script>
