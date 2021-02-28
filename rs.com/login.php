@@ -36,7 +36,6 @@ if (isset($_POST["login"])){
                 $statement->bind_param("si",$dt,$user['userID']);
                 $statement->execute();
                 header('Location: frame.html');
-                
             }
             else{
                 echo "You are Banned.";
