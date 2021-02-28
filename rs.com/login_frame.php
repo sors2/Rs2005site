@@ -44,7 +44,7 @@ $user = $_SESSION['username'];
 
         <?php if(isset($_SESSION['username'])):?>
         <div style="float: left; padding-top: 8%; margin:left: 1%;">
-            <A href="securemenu/securemenu.php" style="text-decoration: underline;" class="c" target="_top" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="login_frame.php" style="text-decoration: underline;" class="c" target="_top" ><FONT color=white>Secure Menu</FONT></A><BR><br>
             <A href="logout.php" style="text-decoration: underline; margin-left:20%;" class="c" target="_top" ><FONT color=white>Logout</FONT></A></TD>
         </div>
         <?php else:?>
