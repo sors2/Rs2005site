@@ -2,36 +2,6 @@
 session_start();
 include "../connect.php";  
 $user = $_SESSION['username'];
-$user_row = mysqli_query($conn, "SELECT * FROM users WHERE username ='$user'");
-while($row = mysqli_fetch_assoc($user_row))
-{
-      $dt = strtotime($row['last_password']);
-      $last_password = date('d M Y', $dt);
-      $recovery_questions = "Recovery Questions not yet set!";
-      if($row['recovery_questions'] != 0){
-        $recovery_questions ="Recovery Questions set!";
-      }
-      $dt = strtotime($row['last_activity']);
-      $last_visit = date('d M Y', $dt);
-
-      $userID = $row['userID'];
-
-      $message_rows = mysqli_query($conn, "SELECT * FROM messagecentre WHERE toID = '{$userID}' AND flag = 0");
-      $unread = mysqli_num_rows($message_rows);
-
-      $posts = mysqli_query($conn, "SELECT replyID FROM replies WHERE dateReply > '{$row['last_activity']}'");
-      $posts = mysqli_num_rows($posts);
-      $threads = mysqli_query($conn, "SELECT threadID FROM threads WHERE date_posted > '{$row['last_activity']}'");
-      $threads = mysqli_num_rows($threads);
-      $posts = $posts + $threads;
-}
-
-$online = mysqli_query($conn, "SELECT * FROM users 
-                        WHERE last_activity
-                        BETWEEN TIMESTAMP( DATE_SUB( NOW() , INTERVAL 5 MINUTE ) ) AND TIMESTAMP( NOW() )");
-$total_online = mysqli_num_rows($online);
-
-mysqli_close($conn);
 ?>
 
 
