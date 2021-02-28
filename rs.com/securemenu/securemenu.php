@@ -1,3 +1,5 @@
+
+
 <?php
 session_start();
 include "../connect.php";  
@@ -41,6 +43,23 @@ mysqli_close($conn);
 
 <HEAD>
    <META content="IE=10.000" http-equiv="X-UA-Compatible">
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function breakout_of_frame()
+{
+  // see https://www.thesitewizard.com/archive/framebreak.shtml
+  // for an explanation of this script and how to use it on your
+  // own website
+  if (top.location != location) {
+    top.location.href = document.location.href ;
+  }
+}
+-->
+</script>
+</head>
+   
+   </script>
    <STYLE>
       <!--
       A {
