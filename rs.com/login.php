@@ -35,7 +35,7 @@ if (isset($_POST["login"])){
                 $statement = $conn->prepare("UPDATE users SET last_activity = ? WHERE userID = ?");
                 $statement->bind_param("si",$dt,$user['userID']);
                 $statement->execute();
-                header('Location: frame.php');
+                header('Location: frame.html');
             }
             else{
                 echo "You are Banned.";
@@ -59,13 +59,7 @@ if (isset($_POST["login"])){
    A.yellow:hover {text-decoration:underline} A.green:hover {text-decoration:underline} A.purple:hover {text-decoration:underline}
    A.pink:hover {text-decoration:underline} 
 </STYLE>
-<script>
-function breakout() {
-  if (window.top != window.self) {
-    window.top.location = "frame.php";
-  }
-}
-</script>
+
 </head>
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040
    style="margin:0">
@@ -134,7 +128,8 @@ function breakout() {
                                                    NAME="pass" SIZE="20" MAX="16"></TD>
                                              </TR>
                                              <TR>
-                                                <TD COLSPAN="2" ALIGN="right"><input type="SUBMIT" onclick="breakout()" value="Secure Login"></TD>
+                                                <TD COLSPAN="2" ALIGN="right"><a href="frame.html" class=c target="_top"><INPUT TYPE="SUBMIT" name="login"
+                                                                                                                                VALUE="Secure Login"></a></TD>
                                              </TR>
                                             </form>
                                           </TABLE>
