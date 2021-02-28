@@ -35,13 +35,13 @@
 
         <?php if(isset($_SESSION['username'])):?>
         <div style="float: left; padding-top: 8%; margin:left: 1%;">
-            <A href="../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
-            <A href="../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+            <A href="securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
         </div>
         <?php else:?>
                 <br>
                 <br>
-                <A href="../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+                <A href="login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
         <?php endif?>
 
                 </NOSCRIPT></CENTER>
