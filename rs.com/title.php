@@ -610,7 +610,7 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                         <?php if (isset($_SESSION['username'])) :?>
                                                                                                             <A class=whitelink href="securemenu/securemenu.php"><B>Subscribe</B></A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=whitelink href="login.php"><B>Subscribe</B></A>
+                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Subscribe</B></A>
                                                                                                         <?php endif ?>   
                                                                                                         </CENTER>
                                                                                                       </TD>
@@ -629,7 +629,7 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
                                                                                                             <A class=c href="securemenu/securemenu.php">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c href="login.php">Login</A>
+                                                                                                            <A class=c target="_top" href="login.php">Login</A>
                                                                                                         <?php endif ?>
                                                                                                       </TD>
                                                                                                    </TR>
