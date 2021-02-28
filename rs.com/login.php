@@ -62,7 +62,7 @@ if (isset($_POST["login"])){
 <script>
 function breakout() {
   if (window.top != window.self) {
-    window.top.location = "frame.htm";
+    window.top.location = "frame.html";
   }
 }
 </script>
@@ -134,8 +134,7 @@ function breakout() {
                                                    NAME="pass" SIZE="20" MAX="16"></TD>
                                              </TR>
                                              <TR>
-                                                <TD COLSPAN="2" ALIGN="right"><input type="button" onclick="breakout()" value="Login">
-                                                                                                                                VALUE="Secure Login"></a></TD>
+                                                <TD COLSPAN="2" ALIGN="right"><input type="SUBMIT" onclick="breakout()" value="Secure Login"></TD>
                                              </TR>
                                             </form>
                                           </TABLE>
