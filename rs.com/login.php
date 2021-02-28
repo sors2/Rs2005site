@@ -128,7 +128,7 @@ if (isset($_POST["login"])){
                                                    NAME="pass" SIZE="20" MAX="16"></TD>
                                              </TR>
                                              <TR>
-                                                <TD COLSPAN="2" ALIGN="right"><a href="frame.html" class=c target="_parent"><INPUT TYPE="SUBMIT" name="login"
+                                                <TD COLSPAN="2" ALIGN="right"><a href="frame.html" class=c target="_top"><INPUT TYPE="SUBMIT" name="login"
                                                                                                                                 VALUE="Secure Login"></a></TD>
                                              </TR>
                                             </form>
