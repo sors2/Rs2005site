@@ -95,8 +95,6 @@ mysqli_close($conn);
 </HEAD>
 
 <BODY text="white" style="margin: 0px;" bgcolor="black" link="#90c040" alink="#90c040" vlink="#90c040">
-<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
-<div>
    <TABLE width="100%" height="100%" cellspacing="0" cellpadding="0">
       <TBODY>
          <TR>
