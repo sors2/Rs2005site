@@ -48,12 +48,6 @@ if (isset($_POST["login"])){
     mysqli_close($conn);
 }
 ?>
-<script>
-function breakout() {
-  if (window.top != window.self) {
-    window.top.location = "frame.php";
-  }
-}
 </script>
 <title>RuneScape - the massive online adventure game by Jagex Ltd</title>
 <STYLE>BODY, TD, P{ font-family:Arial,Helvetica,sans-serif; font-size:13px;}.b {border-style:
