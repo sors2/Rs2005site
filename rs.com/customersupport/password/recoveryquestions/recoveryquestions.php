@@ -54,14 +54,15 @@ if(isset($_POST['submit'])){
                                 
                         //Check for the date format
                         if(preg_match('/^[0-9]{2}\-[0-9]{2}\-[0-9]{4}/',$_POST['last'],$matches)){
-
+                                $last = strtotime($_POST['last']);
+                                $last = date("Y-m-d");
                                 if(!empty($_POST['new'])){
                                         if(strcmp($_POST['new'],$_POST['confirm'])==0){
 
                                                 $details = htmlspecialchars(nl2br($_POST['message']));
                                                 $new_pass = password_hash($_POST['new'], PASSWORD_DEFAULT);
                                                 $stmt = $conn->prepare("INSERT INTO recoveryrequest (question1,question2,question3,question4,question5,firstpassword,password2,password3,email,last_login,new_password,other) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
-                                                $stmt->bind_param("ssssssssssss",$ans1,$ans2,$ans3,$ans4,$ans5,$pass1,$pass2,$pass3,$_POST['email'],$_POST['last'],$new_pass,$details);
+                                                $stmt->bind_param("ssssssssssss",$ans1,$ans2,$ans3,$ans4,$ans5,$pass1,$pass2,$pass3,$_POST['email'],$last,$new_pass,$details);
                                                 $stmt->execute();
                                                 $last_id = $conn->insert_id;
                                                                      
