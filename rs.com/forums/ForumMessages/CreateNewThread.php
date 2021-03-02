@@ -1,37 +1,77 @@
 <?php 
-include "../../UserActivity.php";
 session_start();
+include "../../UserActivity.php";
+include "../../connect.php";
+
+//If the category is not set
+if(!isset($_GET['category'])){
+   header("Location: ../forums.php");
+}
 $category = urldecode($_GET['category']);
-$page = $_GET['page'];
-if (isset($_POST["add"])){
-    include "../../connect.php";
-    
+$encoded_category = urlencode($category);
+
+include "../../ban.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $ban = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($ban['expire'] > $current){
+            header("Location: ../../securemenu/securemenu.php");
+         }
+      }
+   }
+   $stmt->close();
+}
+
+//Check the user is not muted, should not be on this page. Redirect to board.
+include "../../mute.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+         $result = $stmt->get_result();
+         if(mysqli_num_rows($result)){
+            $mute = $result->fetch_assoc();
+            $current = date("Y-m-d H:i:s");
+            if($mute['expire'] > $current){
+            header("Location: ../ForumBoard/forumboard.php?category=$encoded_category");
+         }
+      }
+   }
+   $stmt->close();
+}
+else{
+   $c = urlencode($category);
+   header("Location: ../ForumBoard/forumboard.php?category=$c");
+   $stmt->close();
+}
+//add the title and message
+if(isset($_POST["add"])){
     $title = $_POST["title"];
     $message = htmlspecialchars(nl2br($_POST["message"]));
-    date_default_timezone_set('Australia/Perth');
- 
+
     $stmt= $conn->prepare("SELECT userID FROM users WHERE username = ?");
     $stmt->bind_param("s", $_SESSION['username']);
     $stmt->execute();   
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
- 
     $n = 1;
+
     $statement = $conn->prepare("INSERT INTO threads (title,category,author,last_author,`page`) VALUES (?,?,?,?,?)");
     $statement->bind_param("ssiii",$title, $category,$user['userID'],$user['userID'],$n);
     $statement->execute();
     $last_id = $conn->insert_id;
    
     $statement = $conn->prepare("INSERT INTO replies (threadID,author,reply,originalPost,`page`) VALUES (?, ?, ?, ?, ?)");
-    $statement->bind_param("issii",$last_id,$user['userID'],$message,$n,$_GET['page']);
+    $statement->bind_param("issii",$last_id,$user['userID'],$message,$n,$n);
     $statement->execute();
- 
+
     mysqli_close($conn);
     header("Location: ../ForumThread/forumthread.php?threadID=$last_id&page=1");
-} 
+}
 ?>
 <html>
- 
+
 <head>
 <script type="text/javascript">
 function textLengthTitle(){
@@ -51,7 +91,7 @@ function setTextToCurrentPos(areaId, text) {
   if (!txtarea) {
     return;
   }
- 
+
   var scrollPos = txtarea.scrollTop;
   var strPos = 0;
   var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
@@ -64,7 +104,7 @@ function setTextToCurrentPos(areaId, text) {
   } else if (br == "ff") {
     strPos = txtarea.selectionStart;
   }
- 
+
   var front = (txtarea.value).substring(0, strPos);
   var back = (txtarea.value).substring(strPos, txtarea.value.length);
   txtarea.value = front + text + back;
@@ -81,11 +121,11 @@ function setTextToCurrentPos(areaId, text) {
     txtarea.selectionEnd = strPos;
     txtarea.focus();
   }
- 
+
   txtarea.scrollTop = scrollPos;
 }
 </script>
- 
+
    <STYLE>
       <!--
       A {
@@ -105,10 +145,25 @@ function setTextToCurrentPos(areaId, text) {
    <link media="all" type="text/css" rel="stylesheet" href="css/main.css">
    <link href="css/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
- 
+
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
 
- 
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <A href="../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
+<div>
+
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
          <td valign=middle>
@@ -147,11 +202,13 @@ function setTextToCurrentPos(areaId, text) {
                               <tr>
                                  <td class=e>
                                     <center>
-                                       <b>Runescape Forums - <?php echo urldecode($_GET['category']);?> - Add new thread</b>
+                                       <b>Runescape Forums - <?php echo $category;?> - Add new thread</b>
                                        <br>
-                                       <a href="../ForumBoard/forumboard.php?category=<?php echo urlencode($_GET['category']);?>&page=<?php echo ($_GET['page']);?>" class="c">Back to threads page</a>
+                                       <a href="../ForumBoard/forumboard.php?category=<?php echo $encoded_category;?>&page=<?php echo ($_GET['page']);?>" class="c">Back to threads page</a>
                                        <br>
-                                       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']."?category=$category&page=$page");?>" method="POST">
+                     
+                                       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']."?category=$encoded_category");?>" method="POST">
+                                    
                                        <br>Thread Title: <input size="40" id="charlimit_text_b" name="title" maxlength="60" onkeyup="textLengthTitle();">
                                        <table width=0 bgcolor=black cellpadding=0 border=0>
                                           <div class="commandtwo" colspan="2">
@@ -165,8 +222,8 @@ function setTextToCurrentPos(areaId, text) {
                                        listener="1" rows="20" cols="60" onkeyup="textLengthText();"></textarea></l1>
                                  <br>
                                  <center>You have <span id="charlimit_count_a">2000</span> characters remaining.</center>
-                                 <br><input name="add" value="Add thread" type="submit">&emsp;&emsp;
-                                 <input name="cancel" value="Cancel" type="submit">
+                                 <br><input name="add" value="Add message" type="submit">&emsp;&emsp;
+                                      <input name="cancel" value="Cancel" type="submit">
                                  </form>
                                  <br>
                                  <br>
@@ -219,7 +276,7 @@ function setTextToCurrentPos(areaId, text) {
    </tbody>
    </table>
 </body>
- 
+
 </html>
- 
+
 </html>

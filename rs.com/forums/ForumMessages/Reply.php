@@ -1,8 +1,81 @@
 <?php
 include "../../UserActivity.php";
 session_start();
-$threadID = $_GET['threadID'];
 include "../../connect.php";
+
+//If the category is not set
+if(!isset($_GET['threadID'])){
+   header("Location: ../forums.php");
+}
+$threadID = $_GET['threadID'];
+
+include "../../ban.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $ban = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($ban['expire'] > $current){
+            header("Location: ../../securemenu/securemenu.php");
+         }
+      }
+   }
+   $stmt->close();
+}
+
+//Check the user is not muted, should not be on this page. Redirect to board.
+include "../../mute.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $mute = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($mute['expire'] > $current){
+            $query = ("SELECT `page` FROM threads WHERE threadID=?");      
+            if (!$stmt = mysqli_prepare($conn, $query)){
+               echo "Error: ".$stmt->error;
+               exit();
+            }
+            if(!$stmt->bind_param("i",$threadID)){
+               echo "Error: ".$stmt->error;
+               exit();
+            }
+            if ($stmt->execute()) {
+               $result = $stmt->get_result();
+               $thread = $result->fetch_assoc();
+               $page =  $thread['page'];
+               header("Location: ../ForumThread/forumthread.php?threadID=$threadID&page=$page");
+            } else {
+               echo "Error: ".$stmt->error;
+            }
+            $stmt->close();
+         }
+      }
+   }
+   $stmt->close();
+}
+else{
+   $query = ("SELECT `page` FROM threads WHERE threadID=?");      
+   if (!$stmt = mysqli_prepare($conn, $query)){
+      echo "Error: ".$stmt->error;
+      exit();
+   }
+   if(!$stmt->bind_param("i",$threadID)){
+            echo "Error: ".$stmt->error;
+      exit();
+   }
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      $thread = $result->fetch_assoc();
+      $page =  $thread['page'];
+      header("Location: ../ForumThread/forumthread.php?threadID=$threadID&page=$page");
+   } else {
+      echo "Error: ".$stmt->error;
+   }
+   $stmt->close();
+}
 $stmt = $conn->prepare("SELECT category,title,isSticky,isLocked FROM threads WHERE threadID =?");
 $stmt->bind_param("i",$_GET['threadID']);
 $stmt->execute();
@@ -34,13 +107,15 @@ if (isset($_POST["add"])){
 
     $message = htmlspecialchars(nl2br($_POST['message']));
     
-    $statement = $conn->prepare("INSERT INTO replies (threadID,author,reply,`page`) VALUES (?, ?, ?, ?)");
-    $statement->bind_param("iisi",$_GET['threadID'],$user['userID'],$message,$page);
+    $date = date("Y-m-d H:i:s");
+    $statement = $conn->prepare("INSERT INTO replies (threadID,author,dateReply,reply,`page`) VALUES (?, ?, ?, ?, ?)");
+    $statement->bind_param("iissi",$_GET['threadID'],$user['userID'],$date,$message,$page);
     $statement->execute();
 
     $v = 1;
-    $statement2 = $conn->prepare("UPDATE threads SET total_posts=total_posts+?,last_author=? WHERE threadID =?");
-    $statement2->bind_param("iii",$v,$user['userID'],$_GET['threadID']);
+    $date = date("Y-m-d H:i:s");
+    $statement2 = $conn->prepare("UPDATE threads SET total_posts=total_posts+?,last_author=?,last_reply=? WHERE threadID =?");
+    $statement2->bind_param("iisi",$v,$user['userID'],$date,$_GET['threadID']);
     $statement2->execute();
     unset($_SESSION['colour']);
     mysqli_close($conn);

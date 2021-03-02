@@ -1,4 +1,19 @@
-<?php session_start();?>
+<?php session_start();
+include "../../../../ban.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $ban = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($ban['expire'] > $current){
+            header("Location: BanAppeal.php");
+         }
+      }
+   }
+   $stmt->close();
+}
+?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
@@ -40,13 +55,13 @@ A.c:hover {text-decoration:underline}
         </div>
         <?php if(isset($_SESSION['username'])):?>
         <div style="float: left; padding-top: 8%; margin:left: 1%;">
-            <A href="../../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
-            <A href="../../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+            <A href="../../../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../../../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
         </div>
         <?php else:?>
                 <br>
                 <br>
-                <A href="../../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+                <A href="../../../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
         <?php endif?>
     </div>
 <div>

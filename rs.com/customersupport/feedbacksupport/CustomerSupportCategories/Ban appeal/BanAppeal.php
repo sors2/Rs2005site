@@ -8,9 +8,10 @@ session_start();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
+        $date = date("Y-m-d H:i:s");
         $appeal = htmlspecialchars(nl2br($_POST['appeal']));
-        $stmt = $conn->prepare("INSERT INTO banappeals (userID,appeal) VALUES (?,?)");
-        $stmt->bind_param("is",$user['userID'],$appeal);
+        $stmt = $conn->prepare("INSERT INTO banappeals (userID,`date`,appeal) VALUES (?,?,?)");
+        $stmt->bind_param("iss",$user['userID'],$date, $appeal);
         $stmt->execute();
 
         header('Location: BanAppealSubmit.php');
@@ -193,7 +194,7 @@ session_start();
                                                                                                                                 Alternatively,
                                                                                                                                 you
                                                                                                                                 may
-                                                                                                                                <a href="../../../customersupport.html"
+                                                                                                                                <a href="../../customersupport2.php"
                                                                                                                                         class="c">go
                                                                                                                                         back</a>
                                                                                                                                 to
@@ -228,10 +229,12 @@ session_start();
                                                                                                                                                         <!-- Row 3 -->
                                                                                                                                                         <td>
                                                                                                                                                                 <center>
-                                                                                                                                                                        <br><a
-                                                                                                                                                                                href="BanAppealSubmit.htm"><input
+                                                                                                                                                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+                                                                                                                                                                        <br><input 
                                                                                                                                                                                         value="Submit Ban Appeal"
-                                                                                                                                                                                        type="button"></a>
+                                                                                                                                                                                        type="submit"
+                                                                                                                                                                                        name="submit">
+                                                                                                                                </form>
                                                                                                                                                                 </center>
                                                                                                                                                         </td>
                                                                                                                                                         <!-- Col 1 -->

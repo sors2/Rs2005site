@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 include "../connect.php";  
@@ -18,6 +16,39 @@ while($row = mysqli_fetch_assoc($user_row))
 
       $userID = $row['userID'];
 
+      $stmt = $conn->prepare("SELECT * FROM recoveryanswers WHERE userID = ?");
+      $stmt->bind_param("i",$userID);
+      $stmt->execute();  
+      $result1 = $stmt->get_result();
+      $recovery="Recovery Questions not yet set!";
+      $r="To set recovery questions";
+      if(mysqli_num_rows($result1) > 0){
+         $recovery="Recovery Questions set!";
+         $r = "To update recovery questions";
+         $recov ="recovery";
+      }
+
+      $stmt = $conn->prepare("SELECT * FROM contactdetails WHERE userID = ?");
+      $stmt->bind_param("i",$userID);
+      $stmt->execute();  
+      $result2 = $stmt->get_result();
+      $details="Contact Details not set";
+      if(mysqli_num_rows($result2) > 0){
+         $details = "Contact Details set!";
+         $contacts ="set";
+      }
+
+      $stmt = $conn->prepare("SELECT userID FROM pollhistory WHERE userID = ?");
+      $stmt->bind_param("i",$userID);
+      $stmt->execute();  
+      $result3 = $stmt->get_result();
+      if(mysqli_num_rows($result3)){
+         $voted = "voted";
+      }
+      $poll = mysqli_query($conn, "SELECT max(pollID) AS latest_poll FROM polls");
+      $latest = mysqli_fetch_assoc($poll);
+      $latest = $latest['latest_poll'];
+      
       $message_rows = mysqli_query($conn, "SELECT * FROM messagecentre WHERE toID = '{$userID}' AND flag = 0");
       $unread = mysqli_num_rows($message_rows);
 
@@ -43,11 +74,6 @@ mysqli_close($conn);
 
 <HEAD>
    <META content="IE=10.000" http-equiv="X-UA-Compatible">
-
-
-</head>
-   
-   </script>
    <STYLE>
       <!--
       A {
@@ -196,18 +222,24 @@ mysqli_close($conn);
                                                                <A class="c"
                                                                   href="../accountmanagement/changeyourpassword/changeyourpassword.php">Change
                                                                   your password</A> <BR><BR>
-                                                               <FONT color="#ffbb22"><?php echo $recovery_questions;?>
+                                                               <FONT color="#ffbb22"><?php echo $recovery;?>
                                                                </FONT>
-                                                               <BR>To set recovery questions, <BR>
+                                                               <BR><?php echo $r;?><BR>
                                                                <A class="c"
                                                                   href="../accountmanagement/setrecoveryquestions/setrecoveryquestions.php">click
-                                                                  here.</A> <BR><BR>
+                                                                  here.</A>
+                                                                     <BR><BR>
                                                                <DIV style="margin-top: -8px;">
-                                                                  <FONT color="#ffbb22">Contact Details not set!</FONT>
+                                                                  <FONT color="#ffbb22"><?php echo $details;?></FONT>
                                                                </DIV>
+                                                               <?php if(isset($contacts)):?>
                                                                <A class="c"
-                                                                  href="../accountmanagement/contactdetails/ContactDetails.htm">Set
+                                                                  href="../accountmanagement/contactdetails/ContactDetails.php">Update contact details</A>
+                                                               <?php else:?>
+                                                                  <A class="c"
+                                                                  href="../accountmanagement/contactdetails/ContactDetails.php">Set
                                                                   new contact details</A>
+                                                               <?php endif?>
                                                             </DIV>
                                                          </CENTER>
                                                       </TD>
@@ -259,7 +291,7 @@ mysqli_close($conn);
                                                             src="securemenu_files/message_centre.png"></TD>
                                                       <!-- Col 3 -->
                                                       <TD align="left">
-                                                         <DIV class="floating-box4">You have <?php if($unread == 1):?><?php echo $unread;?> unread messages <?php else:?><?php echo $unread;?> unread message <?php endif?>
+                                                         <DIV class="floating-box4">You have <?php if($unread == 1):?><FONT color="#00ff00"><?php echo $unread;?></font> unread messages <?php else:?><FONT color="#00ff00"><?php echo $unread;?></font>  unread message </font><?php endif?>
                                                             in your message centre. <BR><BR>
                                                             <A class="c" href="../messagecentre/messagecentre.php">View
                                                                your messages from Jagex</A>
@@ -363,9 +395,9 @@ mysqli_close($conn);
                                                       <TD align="left">
                                                          <DIV class="floating-box7">You haven't voted in the
                                                             latest poll! Have your say, vote now! <BR><BR>
-                                                            <A class="c" href="../polls/latestpoll.htm">View
-                                                               latest poll</A> <BR>
-                                                            <A class="c" href="../polls/allpolls.htm">View
+                                                            <A class="c" href="../polls/latestpoll.php?pollID=<?php echo $latest;?>">View latest poll</A> 
+                                                            <BR>
+                                                            <A class="c" href="../polls/allpolls.php">View
                                                                all polls</A>
                                                          </DIV>
                                                       </TD>
@@ -375,7 +407,7 @@ mysqli_close($conn);
                                                       <!-- Col 3 -->
                                                       <TD align="left">
                                                          <DIV class="floating-box8">You are <?php if(isset($_SESSION['permission']) && $_SESSION['permission'] > 1):?> a player 
-                        moderator.<br><a href="../playermodcentre/playermodcentre.php">View Player Mod Centre</a> <?php else:?> not a player moderator.<?php endif?><BR><BR>To learn more about player
+                                                            moderator.<br><a href="../playermodcentre/playermodcentre.htm">View Player Mod Centre</a> <?php else:?> not a player moderator.<?php endif?><BR><BR>To learn more about player
                                                             moderators,
                                                             <a href="../guides/guides/playermods.htm" class="c">click
                                                                here</A>

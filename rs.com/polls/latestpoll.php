@@ -4,7 +4,7 @@
    If you have less options then the database, the columns not used will be NULL.
 */
 session_start();
- 
+
 if(!isset($_GET['pollID'])){
    header('Location: allpolls.php');
 }
@@ -15,7 +15,7 @@ $stmt->bind_param("s", $_SESSION['username']);
 $stmt->execute();   
 $result = $stmt->get_result();
 $user= $result->fetch_assoc();
- 
+
 $stmt= $conn->prepare("SELECT userID FROM pollhistory WHERE pollID = ?");
 $stmt->bind_param("i", $_GET['pollID']);
 $stmt->execute();   
@@ -23,9 +23,9 @@ $result = $stmt->get_result();
 if(mysqli_num_rows($result) > 0){
    header('Location: pollresults.php?pollID='.$pollID.'');
 }
- 
+
 $err = array("vote_error" => "");
- 
+
     if(isset($_POST['radio']) && isset($_POST['vote'])){
         
             $stmt= $conn->prepare("SELECT title FROM polls WHERE pollID = ?");
@@ -33,44 +33,44 @@ $err = array("vote_error" => "");
             $stmt->execute();   
             $result = $stmt->get_result();
             $poll = $result->fetch_assoc();
- 
+
             $stmt= $conn->prepare("SELECT questionID,question FROM pollquestions WHERE pollID = ?");
             $stmt->bind_param("i", $_GET['pollID']);
             $stmt->execute();   
             $result = $stmt->get_result();
- 
+
             while($row = mysqli_fetch_assoc($result)){
                if(strcmp($row['question'],$_POST['radio'])==0){
                   $n = 1;
                   $stmt = $conn->prepare("UPDATE pollquestions SET votes=votes +? WHERE question = ? AND pollID =?");
                   $stmt->bind_param("isi",$n,$row['question'],$_GET['pollID']);
                   $stmt->execute();
- 
+
                   $stmt = $conn->prepare("UPDATE polls SET total_votes=total_votes +? WHERE pollID =?");
                   $stmt->bind_param("ii",$n,$_GET['pollID']);
                   $stmt->execute();
                }
             }
- 
+
             $stmt = $conn->prepare("INSERT INTO pollhistory (pollID,userID) VALUES (?,?)");
             $stmt->bind_param("ii",$_GET['pollID'],$user['userID']);
             $stmt->execute();
             mysqli_close($conn);
-            header('Location: allpolls.php');
+            header('Location: pollresults.php?pollID='.$pollID.'');
          
     }
- 
+
     $stmt= $conn->prepare("SELECT title FROM polls WHERE pollID = ?");
     $stmt->bind_param("i", $_GET['pollID']);
     $stmt->execute();   
     $result = $stmt->get_result();
     $poll = $result->fetch_assoc();
- 
+
     $stmt= $conn->prepare("SELECT questionID,question FROM pollquestions WHERE pollID = ?");
     $stmt->bind_param("i", $_GET['pollID']);
     $stmt->execute();   
     $result = $stmt->get_result();
- 
+
     while($row = mysqli_fetch_assoc($result)){
      $option[] =    '<tr>
                      <!-- Row 1 -->
@@ -88,7 +88,7 @@ $err = array("vote_error" => "");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
- 
+
 <head>
    <style>
       <!--
@@ -106,27 +106,27 @@ $err = array("vote_error" => "");
          font-family: Arial, Helvetica, sans-serif;
          font-size: 13px;
       }
- 
+
       .b {
          border-style: outset;
          border-width: 3pt;
          border-color: #373737
       }
- 
+
       .b2 {
          border-style: outset;
          border-width: 3pt;
          border-color: #570700
       }
- 
+
       .e {
          border: 2px solid #382418
       }
- 
+
       .c {
          text-decoration: none
       }
- 
+
       A.c:hover {
          text-decoration: underline
       }
@@ -144,9 +144,24 @@ $err = array("vote_error" => "");
    <link media="all" type="text/css" rel="stylesheet" href="latestpoll_files/main.css">
    <link href="latestpoll_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
- 
-<body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
 
+<body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <br>
+                <br>
+                <A href="../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
 <div>
    <table cellpadding="0" cellspacing="0" height="100%" width="100%">
       <tbody>
@@ -258,5 +273,5 @@ $err = array("vote_error" => "");
       </tbody>
    </table>
 </body>
- 
+
 </html>

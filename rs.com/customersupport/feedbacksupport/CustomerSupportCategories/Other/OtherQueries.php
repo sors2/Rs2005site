@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_POST['submit'])){
-        include "../../../connect.php";
+        include "../../../../connect.php";
         $message = nl2br(htmlspecialchars($_POST['message']));
 
         $stmt = $conn->prepare("SELECT userID FROM users WHERE username = ?");
@@ -10,12 +10,13 @@ if(isset($_POST['submit'])){
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();;
 
-        $category = "Comments";
-        $stmt = $conn->prepare("INSERT INTO feedback (category, userID,`message`) VALUES (?,?,?)");
-        $stmt->bind_param("sis", $category,$user['userID'],$message);
+        $category = "Other";
+        $date = date("Y-m-d H:i:s");
+        $stmt = $conn->prepare("INSERT INTO feedback (category, `date`, userID,`message`) VALUES (?, ?, ?,?)");
+        $stmt->bind_param("ssis", $category,$date,$user['userID'],$message);
         $stmt->execute();
 
-        header("Location: QuerySubmit.php");
+        header("Location: OtherQuerySubmit.php");
 }
 
 ?>

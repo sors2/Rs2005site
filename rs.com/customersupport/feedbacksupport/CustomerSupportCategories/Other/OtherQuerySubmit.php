@@ -190,7 +190,7 @@
                                                                                                                                         as
                                                                                                                                         possible.
                                                                                                                                         <br>
-                                                                                                                                        <br><a href="../../../customersupport.html"
+                                                                                                                                        <br><a href="../../../customersupport.php"
                                                                                                                                                 class="c">Click
                                                                                                                                                 here</a>
                                                                                                                                         to

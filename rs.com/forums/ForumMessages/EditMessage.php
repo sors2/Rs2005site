@@ -2,7 +2,62 @@
 include "../../UserActivity.php";
 session_start();
 include "../../connect.php";
+
+//If the category is not set
+if(!isset($_GET['replyID'])){
+   header("Location: ../forums.php");
+}
 $replyID = $_GET['replyID'];
+
+include "../../ban.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $ban = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($ban['expire'] > $current){
+            header("Location: ../../securemenu/securemenu.php");
+         }
+      }
+   }
+   $stmt->close();
+}
+
+//Check the user is not muted, should not be on this page. Redirect to board.
+include "../../mute.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $mute = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($mute['expire'] > $current){
+            $query = ("SELECT threadID,`page` FROM replies WHERE replyID=?");      
+            if (!$stmt = mysqli_prepare($conn, $query)){
+               echo "Error: ".$stmt->error;
+               exit();
+            }
+            if(!$stmt->bind_param("i",$replyID)){
+               echo "Error: ".$stmt->error;
+               exit();
+            }
+            if ($stmt->execute()) {
+               $result = $stmt->get_result();
+               $thread = $result->fetch_assoc();
+               $threadID = $thread['threadID'];
+               $page =  $thread['page'];
+               header("Location: ../ForumThread/forumthread.php?threadID=$threadID&page=$page");
+            } else {
+               echo "Error: ".$stmt->error;
+            }
+            $stmt->close();
+         }
+      }
+   }
+   $stmt->close();
+}
+
 $stmt = $conn->prepare("SELECT threadID,reply,`page` FROM replies WHERE replyID =?");
 $stmt->bind_param("i",$_GET['replyID']);
 $stmt->execute();
@@ -124,7 +179,23 @@ function textLengthText(){
 </head>
 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
-
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <br>
+                <br>
+                <A href="../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
+<div>
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
          <td valign=middle>

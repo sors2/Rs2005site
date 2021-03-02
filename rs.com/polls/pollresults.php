@@ -21,20 +21,20 @@ $stmt->bind_param("i", $_GET['pollID']);
 $stmt->execute();   
 $result = $stmt->get_result();
 $poll = $result->fetch_assoc();
- 
+
 if($poll['status'] == 0){
     $status = "Poll is open";
 }
 else{
     $status = "Poll is now closed";
 }
- 
+
 $stmt= $conn->prepare("SELECT rolesID FROM users WHERE username = ?");
 $stmt->bind_param("s", $_SESSION['username']);
 $stmt->execute();   
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
- 
+
 $stmt= $conn->prepare("SELECT question,votes FROM pollquestions WHERE pollID = ?");
 $stmt->bind_param("i", $_GET['pollID']);
 $stmt->execute();   
@@ -47,7 +47,7 @@ while($row = mysqli_fetch_assoc($result)){
     else{
         $percent = round(($row['votes'] / $poll['total_votes'])*100);
     }
- 
+
  $options[] =    '<tr>
                 <td></td><td></td><td></td><td></td>
                 <td style="text-align:right">'.$row['question'].'</td>
@@ -64,7 +64,7 @@ while($row = mysqli_fetch_assoc($result)){
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
- 
+
 <head>
    <style>
       <!--
@@ -82,27 +82,27 @@ while($row = mysqli_fetch_assoc($result)){
          font-family: Arial, Helvetica, sans-serif;
          font-size: 13px;
       }
- 
+
       .b {
          border-style: outset;
          border-width: 3pt;
          border-color: #373737
       }
- 
+
       .b2 {
          border-style: outset;
          border-width: 3pt;
          border-color: #570700
       }
- 
+
       .e {
          border: 2px solid #382418
       }
- 
+
       .c {
          text-decoration: none
       }
- 
+
       A.c:hover {
          text-decoration: underline
       }
@@ -120,9 +120,24 @@ while($row = mysqli_fetch_assoc($result)){
    <link media="all" type="text/css" rel="stylesheet" href="pollresults_files/main.css">
    <link href="pollresults_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
- 
-<body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
 
+<body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <br>
+                <br>
+                <A href="../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
 <div>
    <table cellpadding="0" cellspacing="0" height="100%" width="100%">
       <tbody>
@@ -249,5 +264,5 @@ while($row = mysqli_fetch_assoc($result)){
       </tbody>
    </table>
 </body>
- 
+
 </html>

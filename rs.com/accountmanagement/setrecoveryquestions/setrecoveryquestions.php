@@ -88,7 +88,7 @@ if(isset($_POST['submit'])){
             $recovery_questions ->bind_param("iiiiii",$userID,$q_ids[0], $q_ids[1],$q_ids[2], $q_ids[3], $q_ids[4]);
             $recovery_questions ->execute();
 
-            header('Location: ../../securemenu/securemenu.php')
+            header('Location: ../../securemenu/securemenu.php');
         }
         else{
             $err_array['recovery_err'] = "One of the answers is empty or invalid";

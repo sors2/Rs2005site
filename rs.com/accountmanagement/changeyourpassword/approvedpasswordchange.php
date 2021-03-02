@@ -39,9 +39,13 @@ A{text-decoration:none}
               <div>
 
 <table width=100% height=100% cellpadding=0 cellspacing=0><tr><td valign=middle><center><table cellpadding=0 cellspacing=0><tr><td valign=top><img src=img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td><td valign=top><img src=img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td><td valign=top><img src=img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td></tr></table><table width=600 cellpadding=0 cellspacing=0 border=0 background=img/background2.jpg><tr><td valign=bottom><center><table width=500 bgcolor=black cellpadding=4><tr><td class=e><center>
-<div style="text-align: left; background: none;"><center><b>Secure Services</b> 
-- You are logged in as <font color="#ffbb22">Username </font><b>
-<br>Click the links by the top-left padlock for secure menu or logout</b></center>
+<div style="text-align: left; background: none;"><center><b>Secure Services</b> - 
+                                            <?php if (isset($_SESSION['username'])): ?>
+                                                    <span><?php echo "You are logged in as ";?></span><span style = "color: #ffbb22;"><?php echo $_SESSION['username'];?></span><br><b>Click the links by the top-left padlock for secure menu or logout</b></center>
+                                            <?php else : ?>
+                                                    <span>You are not logged in</a></span><br><b>Click the links by the top-left padlock for secure menu or login</b></center>
+                                            <?php endif ?>		
+                                        </div>
 </center>
 </td>
 </tr>
@@ -54,7 +58,7 @@ class=e>
 <br>
 <center><b><b><font color="#FFBB22">You have successfully changed your password details on this account.</font></b></b></center>
 <br>
-<br>We strongly advise that you read our <a href="../../guides/securetips.php" class="c">Security Tips Guide</a> then <b>once you are sure that your account is secure</b>
+<br>We strongly advise that you read our <a href="../../guides/securetips.html" class="c">Security Tips Guide</a> then <b>once you are sure that your account is secure</b>
 <a href="changeyourpassword.php" class="c">change your password here</a> to secure your account.
 <br>
 <br>To return to secure menu click <a href="../../securemenu/securemenu.php">here</a>

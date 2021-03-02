@@ -1,12 +1,43 @@
 <html>
 
 <?php 
-include "../../UserActivity.php";
 session_start();
+include "../../UserActivity.php";
+include "../../connect.php";
+
+include "../../ban.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $ban = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($ban['expire'] > $current){
+            header("Location: ../securemenu/securemenu.php");
+         }
+      }
+   }
+   $stmt->close();
+}
+
+include "../../mute.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $mute = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($mute['expire'] > $current){
+            $muted ="muted";
+         }
+      }
+   }
+   $stmt->close();
+}
+
 if(!isset($_GET['category'])){
         header('Location: ../forums.php');
 }
-include "../../connect.php";
 
 if(!isset($_GET['page'])){
         $page = 1;
@@ -20,7 +51,7 @@ $stmt = $conn->prepare("SELECT * FROM threads WHERE category = ?");
 $stmt->bind_param("s", $category);
 $stmt->execute();
 $numOfTitles = $stmt->get_result();
-$posts_per_page = 3;
+$posts_per_page = 15;
 if(mysqli_num_rows($numOfTitles) > 0)
 {
         $total_results  = mysqli_num_rows($numOfTitles);
@@ -49,7 +80,7 @@ $counter = 0;
 
         $stmt = $conn->prepare("UPDATE threads SET `page` = ? WHERE threadID = ?");
         $stmt->bind_param("ii", $page,$row['threadID']);
-        $stmt->execute(); 
+        $stmt->execute();
 
         $stmt = $conn->prepare("SELECT username FROM users WHERE userID = ?");
         $stmt->bind_param("i", $row['author']);
@@ -76,7 +107,7 @@ $counter = 0;
         $locked = "";
         if($row['isSticky'])
         {
-                $sticky = '<img src="img/stickied.png" width="13" height="13" alt="" title="" />';   
+                $sticky = '<img src="../ForumBoard/img/stickied.png" width="13" height="13" alt="" title="" />';   
         }
         if($row['isLocked'])
         {
@@ -90,11 +121,11 @@ $counter = 0;
         $hide="";
         if(isset($_SESSION['permission']) && $_SESSION['permission'] > 1){
                 $tools = '<a href="../../playermodcentre/PlayerModCentre/ModForum/Escalate/EscalateBoard.php?threadID='.$row["threadID"].'">Escalate</a>' ;
-                $hide = '<a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModBoard/HideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/hide.png" alt="" title="hide" height="15" width="30"></a> <a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModBoard/UnhideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/unhide.png" alt="" title="unhide" height="15" width="30"></a>';
+                $hide = '<a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModBoard/HideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/hide.png" alt="" title="hide" height="15" width="30"></a> <a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModboard/UnhideThread.php?threadID='.$row['threadID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/unhide.png" alt="" title="unhide" height="15" width="30"></a>';
         }
         if($row['hidden'] == 1){
 
-               if($current_user['rolesID'] >1){
+               if(isset($current_user) && $current_user['rolesID'] > 1){
                   $threads[] = 
                   '<div style="background: none repeat scroll 0% 0% rgb(51,0,0); padding: 0px 0px 0px 6px;margin-bottom: 0px; height: 40px">
                   <div style="height:5px;"> 
@@ -163,6 +194,21 @@ mysqli_close($conn);
 </head>
 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <A href="../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
+<div>
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
          <td valign=middle>
@@ -202,10 +248,10 @@ mysqli_close($conn);
                               <tr>
                                  <td class=e>
                                     <center><a href="forumboard.php?category=<?php echo urldecode($_GET['category']);?>"><img class="imiddle" title="Refresh" alt="Refresh"
-                                             src="img/refresh.png" hspace="0" height="13" border="0"
+                                             src="../forumboard/img/refresh.png" hspace="0" height="13" border="0"
                                              width="13"></a> <b>Runescape Forums - <?php echo urldecode($_GET['category']);?></b>
                                        <br><a href="../forums.php" class="c">Back to forums home</a>
-                                       <?php if(isset($_SESSION['username'])) :?>
+                                       <?php if(isset($_SESSION['username']) && !isset($muted)) :?>
                                             - <a ccID="2083" href="../ForumMessages/CreateNewThread.php?category=<?php echo urlencode($category);?>&page=<?php echo $page;?>">Create new thread</a>
                                         <?php else:?>
                                         <?php endif;?>
@@ -229,7 +275,7 @@ mysqli_close($conn);
                                                     }
                                             }       
                                             else{
-                                                echo '<a href="forumboard.php?category='.$c.'"><img src="img/first.png" width="26" height="13" alt="" title="" /></a> <a href="forumboard.php?category='.$c.'&page=' . $num_per_pages. '"><img src="img/previous.png" width="26" height="13" alt="" title="" /></a> page <input size="3" id="uid" value="' . $page . '"> of '.$num_per_pages.'<a href="forumboard.php?category='.$c.'&page=' . $next. '"> <img src="img/next.png" width="26" height="13" alt="" title="" /></a> <a href="forumboard.php?category='.$c.'&page=' . $num_per_pages. '"><img src="img/last.png" width="26" height="13" alt="" title="" /></a>';     
+                                                echo '<a href="forumboard.php?category='.$c.'"><img src="img/first.png" width="26" height="13" alt="" title="" /></a> <a href="forumboard.php?category='.$c.'&page=' . $prev.'"><img src="img/previous.png" width="26" height="13" alt="" title="" /></a> page <input size="3" id="uid" value="' . $page . '"> of '.$num_per_pages.'<a href="forumboard.php?category='.$c.'&page=' . $next. '"> <img src="img/next.png" width="26" height="13" alt="" title="" /></a> <a href="forumboard.php?category='.$c.'&page=' . $num_per_pages. '"><img src="img/last.png" width="26" height="13" alt="" title="" /></a>';     
                                             }
                                         ?>
                                     </center>
