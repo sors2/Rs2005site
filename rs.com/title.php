@@ -540,40 +540,6 @@ while($row = mysqli_fetch_assoc($result))
                                                                         </TABLE>
                                                                      </SPAN>
                                                                      <SPAN 
-                                                                     class=item>
-                                                                        <TABLE class=itemtable cellSpacing=0 cellPadding=0>
-                                                                           <TBODY>
-                                                                              <TR>
-                                                                                 <TD align=middle width=100><A 
-                                                                                       href="playermodcentre/PlayerModCentre/ModForum/AdminTools/AdminTools.php"><IMG 
-                                                                                       src="../img/title/Jagex_moderator_gold_crown.png" width=77 height=120border=0></A></TD>
-                                                                                 <TD vAlign=top width=120>
-                                                                                    <TABLE height=45 cellPadding=2 width=110 
-                                                                                       bgColor=black>
-                                                                                       <TBODY>
-                                                                                          <TR>
-                                                                                             <TD class=b id=adminhome
-                                                                                                background=../img/stoneback.gif 
-                                                                                                bgColor=#474747>
-                                                                                                <CENTER><A class=whitelink 
-                                                                                                onmouseover="greyglow('hiscoresbut')" 
-                                                                                                onmouseout="ungreyglow('hiscoresbut')" 
-                                                                                                href="playermodcentre/PlayerModCentre/ModForum/AdminTools/AdminTools.php"><B>Admin Home</B></A>
-                                                                                                </CENTER>
-                                                                                             </TD>
-                                                                                          </TR>
-                                                                                       </TBODY>
-                                                                                    </TABLE>
-                                                                                    Scape05 admin tools for greater
-                                                                                    control.<BR><A class=c 
-                                                                                    href="playermodcentre/PlayerModCentre/ModForum/AdminTools/AdminTools.php">Click 
-                                                                                    Here</A> 
-                                                                                    </TD>
-                                                                                 </TR>
-                                                                              </TBODY>
-                                                                           </TABLE>
-                                                                     </SPAN>
-                                                                     <SPAN 
                                                                         class=item>
                                                                         <TABLE class=itemtable cellSpacing=0 cellPadding=0>
                                                                            <TBODY>
