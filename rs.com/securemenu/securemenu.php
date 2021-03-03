@@ -237,7 +237,7 @@ mysqli_close($conn);
                                                                   href="../accountmanagement/contactdetails/ContactDetails.php">Update contact details</A>
                                                                <?php else:?>
                                                                   <A class="c"
-                                                                  href="../accountmanagement/contactdetails/ContactDetails.php">Set
+                                                                  href="../accountmanagement/contactdetails/ContactDetailsEdit.php">Set
                                                                   new contact details</A>
                                                                <?php endif?>
                                                             </DIV>
