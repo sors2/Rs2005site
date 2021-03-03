@@ -2,7 +2,7 @@
 session_start();
 if(isset($_POST['submit'])){
         include "../../../connect.php";
-        $message = nl2br(htmlspecialchars($_POST['message']));
+        $message = htmlspecialchars(nl2br($_POST['message']));
 
         $stmt = $conn->prepare("SELECT userID FROM users WHERE username = ?");
         $stmt->bind_param("s",$_SESSION['username']);
@@ -10,9 +10,9 @@ if(isset($_POST['submit'])){
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();;
 
-        $category = "Suggestions";
+        $category = "Suggestion";
         $date = date("Y-m-d H:i:s");
-        $stmt = $conn->prepare("INSERT INTO feedback (category, userID,`message`) VALUES (?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO feedback (category, `date`, userID,`message`) VALUES (?,?,?,?)");
         $stmt->bind_param("ssis", $category, $date, $user['userID'],$message);
         $stmt->execute();
 
