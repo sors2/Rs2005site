@@ -20,7 +20,7 @@ if(isset($_POST['create']))
  
                            $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
  
-                           $stmt = $conn->prepare("INSERT INTO pastpasswords (password3) VALUES (?)");
+                           $stmt = $conn->prepare("INSERT INTO pastpasswords (firstpassword) VALUES (?)");
                            $stmt->bind_param("s",$hash_pass);
                            $stmt->execute();
                            $last_id = $conn->insert_id; 
