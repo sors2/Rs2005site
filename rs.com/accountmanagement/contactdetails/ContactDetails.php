@@ -104,28 +104,28 @@ A.c:hover {text-decoration:underline}
   </tr>
   <tr align="left"><!-- Row 2 -->
      <td bgcolor="CBCBCB" width="85"><font color="#000000"><b>Your name</b></font></td><!-- Col 1 -->
-     <td bgcolor="CBCBCB" valign="top"><font color="#000000"><?php echo $details['name'];?></font></td><!-- Col 2 -->
+     <td bgcolor="CBCBCB" valign="top"><font color="#000000"><?php if(isset($details['name'])){echo $details['name'];}?></font></td><!-- Col 2 -->
   </tr>
   <tr align="left"><!-- Row 3 -->
      <td bgcolor="A7A7A7"><font color="#000000"><b>Address
 	 <br></b></font></td><!-- Col 1 -->
-     <td bgcolor="A7A7A7"><font color="#000000"><?php echo $details['address'];?></font></td><!-- Col 2 -->
+     <td bgcolor="A7A7A7"><font color="#000000"><?php if(isset($details['address'])){echo $details['address'];}?></font></td><!-- Col 2 -->
   </tr>
   <tr align="left"><!-- Row 4 -->
      <td bgcolor="CBCBCB"><font color="#000000"><b>Post/zip code</b></font></td><!-- Col 1 -->
-     <td bgcolor="CBCBCB"><font color="#000000"><?php echo $details['zip'];?></font></td><!-- Col 2 -->
+     <td bgcolor="CBCBCB"><font color="#000000"><?php if(isset($details['zip'])){echo $details['zip'];}?></font></td><!-- Col 2 -->
   </tr>
   <tr align="left"><!-- Row 5 -->
      <td bgcolor="A7A7A7"><b><font color="#000000">Country</font></b></td><!-- Col 1 -->
-     <td bgcolor="A7A7A7"><font color="#000000"><?php echo $details['country'];?></font></td><!-- Col 2 -->
+     <td bgcolor="A7A7A7"><font color="#000000"><?php if(isset($details['country'])){echo $details['country'];}?></font></td><!-- Col 2 -->
   </tr>
   <tr align="left"><!-- Row 4 -->
      <td bgcolor="CBCBCB"><font color="#000000"><b>Telephone</b></font></td><!-- Col 1 -->
-     <td bgcolor="CBCBCB"><font color="#000000"><?php echo $details['telephone'];?></font></td><!-- Col 2 -->
+     <td bgcolor="CBCBCB"><font color="#000000"><?php if(isset($details['telephone'])){echo $details['telephone'];}?></font></td><!-- Col 2 -->
   </tr>
   <tr align="left"><!-- Row 5 -->
      <td bgcolor="A7A7A7"><b><font color="#000000">Email</font></b></td><!-- Col 1 -->
-     <td bgcolor="A7A7A7"><font color="#000000"><?php echo $details['email'];?></font></td><!-- Col 2 -->
+     <td bgcolor="A7A7A7"><font color="#000000"><?php if(isset($details['email'])){echo $details['email'];}?></font></td><!-- Col 2 -->
   </tr>
 <tr>
 <td colspan="2"><center>

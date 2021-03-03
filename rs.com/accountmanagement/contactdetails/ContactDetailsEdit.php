@@ -3,6 +3,19 @@
 session_start();
 include "../../connect.php";
 $err = array("name_err" => "", "address_err" => "", "zip_err" => "", "country_err" => "", "tele_err" => "", "email_err" => "");
+
+   $stmt= $conn->prepare("SELECT userID FROM users WHERE username = ?");
+   $stmt->bind_param("s", $_SESSION['username']);
+   $stmt->execute();   
+   $result = $stmt->get_result();
+   $user = $result->fetch_assoc();
+
+   $stmt= $conn->prepare("SELECT * FROM contactdetails WHERE userID = ?");
+   $stmt->bind_param("i", $user['userID']);
+   $stmt->execute();   
+   $result = $stmt->get_result();
+   $details = $result->fetch_assoc();
+   
 if(isset($_POST['submit'])){
    $name = htmlspecialchars(trim($_POST['real_name']));
    if(preg_match('/\\d/', $name) == 0){
@@ -12,7 +25,7 @@ if(isset($_POST['submit'])){
          $country= htmlspecialchars($_POST['country']);
          if(preg_match('/\\d/', $name) == 0){
             $tele = htmlspecialchars($_POST['tele']);
-            if(preg_match('/\+?([0-9]{2})-?([0-9]{3})-?([0-9]{6,7})/', $tele) == 1){
+            if(preg_match('/\+?([0-9]{2})-?([0-9]{3})-?([0-9]{4,5})([0-0]{2})?/', $tele) == 1){
                $email = htmlspecialchars($_POST['email']);
                preg_match('/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD',$email,$matches);
                if(!empty($matches)){
@@ -23,9 +36,18 @@ if(isset($_POST['submit'])){
                   $result = $stmt->get_result();
                   $user = $result->fetch_assoc();
 
-                  $stmt = $conn->prepare("INSERT INTO contactdetails (userID,`name`,`address`,zip,country,telephone,email) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                  $stmt->bind_param('ississs',$user['userID'],$name,$address,$post, $country,$tele,$email);
-                  $stmt->execute();
+                  if(isset($details)){
+                     $stmt = $conn->prepare("UPDATE contactdetails SET `name`=?,`address`=?,zip=?,country=?,telephone=?,email=? WHERE userID=?");
+                     $stmt->bind_param('ssisssi',$name,$address,$post, $country,$tele,$email,$user['userID']);
+                     $stmt->execute();
+                  }
+                  else{
+                     $stmt = $conn->prepare("INSERT INTO contactdetails (userID,`name`,`address`,zip,country,telephone,email) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                     $stmt->bind_param('ississs',$user['userID'],$name,$address,$post, $country,$tele,$email);
+                     $stmt->execute();
+                  }
+
+                  header("Location: ContactDetailsSet.php");
                }
                else{
                   $err['email_err'] = "Invalid email address.";
@@ -107,23 +129,6 @@ if(isset($_POST['submit'])){
 </head>
 
 <body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
-<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
-                  <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
-                      <div style="float: left;">
-                          <IMG width=44 height=59 src="../../frame_files/lock.gif">
-                      </div>
-                      <?php if(isset($_SESSION['username'])):?>
-                      <div style="float: left; padding-top: 8%; margin:left: 1%;">
-                          <A href="../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
-                          <A href="../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
-                      </div>
-                      <?php else:?>
-                              <br>
-                              <br>
-                              <A href="../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
-                      <?php endif?>
-                  </div>
-              <div>
    <table cellpadding="0" cellspacing="0" height="100%" width="100%">
       <tbody>
          <tr>
@@ -198,21 +203,21 @@ if(isset($_POST['submit'])){
                                                       <!-- Row 1 -->
                                                       <td align="left" width="86px;">Your real name:</td>
                                                       <!-- Col 1 -->
-                                                      <td align="left"><input size="70" name="real_name"></td>
+                                                      <td align="left"><input size="70" value="<?php if(isset($details['name'])){echo $details['name'];}?>" name="real_name"></td>
                                                       <!-- Col 2 -->
                                                    </tr>
                                                    <tr>
                                                       <!-- Row 2 -->
                                                       <td align="left">Address:</td>
                                                       <!-- Col 1 -->
-                                                      <td align="left"><textarea style="width:380px;" name="address"></textarea></td>
+                                                      <td align="left"><textarea style="width:380px;" name="address"><?php if(isset($details['address'])){echo $details['address'];}?></textarea></td>
                                                       <!-- Col 2 -->
                                                    </tr>
                                                    <tr>
                                                       <!-- Row 3 -->
                                                       <td align="left">Post/Zipcode:</td>
                                                       <!-- Col 1 -->
-                                                      <td align="left"><input name="post"></td>
+                                                      <td align="left"><input value="<?php if(isset($details['zip'])){echo $details['zip'];}?>" name="post"></td>
                                                       <!-- Col 2 -->
                                                    </tr>
                                                    <tr>
@@ -222,10 +227,10 @@ if(isset($_POST['submit'])){
                                                       <td align="left">
                                                          <select name="country"
                                                             style="height:18px; width:330px; font-size:12px;">
-                                                            <option selected="selected" value="Canada">Canada</option>
+                                                            <option value="Canada">Canada</option>
                                                             <option value="Czech">Czech</option>
                                                             <option value="Germany">Germany</option>
-                                                            <option value=""></option>
+                                                            <option value="Australia">Australia</option>
                                                             <option value="Japan">Japan</option>
                                                             <option value="United Kingdom">United Kingdom</option>
                                                             <option value="United States">United States</option>
@@ -237,14 +242,14 @@ if(isset($_POST['submit'])){
                                                       <!-- Row 5 -->
                                                       <td align="left">Telephone:</td>
                                                       <!-- Col 1 -->
-                                                      <td align="left"><input name="tele"></td>
+                                                      <td align="left"><input value="<?php if(isset($details['telephone'])){echo $details['telephone'];}?>" name="tele"></td>
                                                       <!-- Col 2 -->
                                                    </tr>
                                                    <tr>
                                                       <!-- Row 6 -->
                                                       <td align="left">Email:</td>
                                                       <!-- Col 1 -->
-                                                      <td align="left"><input name="email" size="50"></td>
+                                                      <td align="left"><input name="email" value="<?php if(isset($details['email'])){echo $details['email'];}?>" size="50"></td>
                                                       <!-- Col 2 -->
                                                    </tr>
                                                    <tr>
@@ -255,6 +260,7 @@ if(isset($_POST['submit'])){
                                                          <div style="margin-left:-90px;"><input value="Submit"
                                                                type="submit" name="submit"></div>
                                                       </td>
+                                                      <td><font color="#ffbb22"><?php echo $err['name_err'];?><?php echo $err['zip_err'];?><?php echo $err['country_err'];?><?php echo $err['tele_err'];?><?php echo $err['email_err'];?></font></td>
                                                       <!-- Col 2 -->
                                                    </tr>
    </form>
