@@ -1,7 +1,7 @@
 <html>
 <head>
     <?php 
-         include "../UserActivity.php";
+         include "../../../UserActivity.php";
         session_start();
         include "../../../connect.php";
         $stmt = $conn->prepare("SELECT userID,date_created,rolesID,smileys FROM users WHERE username = ?");

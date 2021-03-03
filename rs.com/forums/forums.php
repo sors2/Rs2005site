@@ -1,7 +1,26 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+session_start();
+include "../ban.php";
+if(isset($_SESSION['username'])){
+   if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+         $ban = $result->fetch_assoc();
+         $current = date("Y-m-d H:i:s");
+         if($ban['expire'] > $current){
+            header("Location: ../securemenu/securemenu.php");
+         }
+      }
+   }
+   $stmt->close();
+}
+
 $list = [
+        "Player Moderator News" => "-",
+        "Player Moderator Procedures" => "-",
+        "Player Moderator Suggestions" => "-",
+        "Player Moderator Archive" => "-",
+        "Player Moderator Lounge" => "-",
         "News & Announcements" => "-",
         "General" => "-",
         "Recent Updates" => "-",
@@ -43,7 +62,6 @@ $list = [
 $posts = $list;
 $dates = $list;
 ?>
-<?php session_start()?>
 <?php
                    include "../connect.php";
 
@@ -53,16 +71,18 @@ $dates = $list;
                         $total_online = mysqli_num_rows($online);      
 ?>
 
-        <?php
-$result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(last_reply) as last_post
-                               FROM threads 
-                               GROUP BY category");
-        $result = mysqli_query($conn, "SELECT COUNT(category) as total ,category,last_reply FROM threads GROUP BY category");
-		
+<?php
+
+        $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(last_reply) as last_post FROM threads GROUP BY category");
+        if(!$result)
+         {              
+            printf("Something went wrong with the query:\n%s\n", $conn->error);
+            exit;
+         }
         while($row = mysqli_fetch_assoc($result)){
                 $list[$row['category']] = $row['total'];
-                $date = strtotime($row['last_reply']);
-                $date_formated = date('d M Y h:i', $date);
+                $date = strtotime($row['last_post']);
+                $date_formated = date('d M Y H:i', $date);
                 $dates[$row['category']] = $date_formated;
         }
 ?>
@@ -70,6 +90,13 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
         $result = mysqli_query($conn, "SELECT COUNT(replies.threadID) as total, threads.category FROM threads INNER JOIN replies ON threads.threadID = replies.threadID GROUP BY threads.category");
         while($row = mysqli_fetch_assoc($result)){
                 $posts[$row['category']] = $row['total'];
+        }
+        if(isset($_SESSION['username'])){
+            $stmt = $conn->prepare("SELECT rolesID FROM users WHERE username = ?");
+            $stmt->bind_param("s", $_SESSION['username']);
+            $stmt->execute();  
+            $result= $stmt->get_result();
+            $user = $result->fetch_assoc();
         }
 ?>
 <html>
@@ -88,6 +115,23 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
 </head>
 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <br>
+                <br>
+                <A href="../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
+<div>
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
          <td valign=middle>
@@ -128,7 +172,7 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
                                  <tbody>
                                     <tr>
                                        <td class="e">
-                                          <center><b><a href="forums.php" class="c"><img class="imiddle" title="Refresh"
+                                          <center><b><a href="forums.htm" class="c"><img class="imiddle" title="Refresh"
                                                       alt="Refresh" src="ForumsHomepage_files/refresh.png" height="13"
                                                       hspace="0" border="0" width="13"></a>
                                                 <font color="#FFFFFF">RuneScape Forums</font><br>
@@ -189,6 +233,92 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
                                                    </tr>
                                                 </tbody>
                                              </table>
+                                              <?php if(isset($user)  && $user['rolesID'] > 1):?>      
+                                             <font color="#FFFFFF">Runescape Mods Only</font>
+                                                   <table border="0" width="100%">
+                                                      <tr>
+                                                         <!-- Row 1 -->
+                                                         <td width="5%">
+                                                            <a href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator News')?>"><img src="ForumsHomepage_files/PlayerModNews.png" height="25" hspace="0" border="0" width="25"></a></td>
+                                                         <td width="49%">
+                                                            <a class="c" href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator News')?>"><font color="#FFFFFF"><font color="#90C040">Player Moderator News</font></font></a><br><font color="#FFFFFF">Keep up to date with the latest events</font></td>
+                                                         <td width="13%">
+                                                            <center><?php echo $posts['Player Moderator News'];?></center>
+                                                         </td><!-- Col 3 -->
+                                                         <td width="13%">
+                                                            <center><?php echo $list['Player Moderator News'];?></center>
+                                                         </td><!-- Col 4 -->
+                                                         <td width="20%">
+                                                            <center><?php echo $dates['Player Moderator News'];?></center>
+                                                         </td><!-- Col 5 -->
+                                                      </tr>
+                                                      <tr>
+                                                         <!-- Row 2 -->
+                                                         <td width="5%">
+                                                            <a href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Procedures')?>"><img src="ForumsHomepage_files/PlayerModProcedures.png" height="25" hspace="0" border="0" width="25"></a></td>
+                                                         <td width="49%">
+                                                            <a class="c" href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Procedures')?>"><font color="#FFFFFF"><font color="#90C040">Player Moderator Procedures</font></font></a><br><font color="#FFFFFF">For questions about moderating procedures</font></td>
+                                                         <td width="13%">
+                                                            <center><?php echo $posts['Player Moderator Procedures'];?></center>
+                                                         </td><!-- Col 3 -->
+                                                         <td width="13%">
+                                                            <center><?php echo $list['Player Moderator Procedures'];?></center>
+                                                         </td><!-- Col 4 -->
+                                                         <td width="20%">
+                                                            <center><?php echo $dates['Player Moderator Procedures'];?></center>
+                                                         </td><!-- Col 5 -->
+                                                      </tr>
+                                                      <tr>
+                                                         <!-- Row 3 -->
+                                                         <td width="5%">
+                                                            <a href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Suggestions')?>"><img src="ForumsHomepage_files/PlayerModSuggestions.png" height="25" hspace="0" border="0" width="25"></a></td>
+                                                         <td width="49%">
+                                                            <a class="c" href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Suggestions')?>"><font color="#FFFFFF"><font color="#90C040">Player Moderator Suggestions</font></font></a><br><font color="#FFFFFF">Discuss ideas for features/tools or other areas of moderating</font></td>
+                                                         <td width="13%">
+                                                            <center><?php echo $posts['Player Moderator Suggestions'];?></center>
+                                                         </td><!-- Col 3 -->
+                                                         <td width="13%">
+                                                            <center><?php echo $list['Player Moderator Suggestions'];?></center>
+                                                         </td><!-- Col 4 -->
+                                                         <td width="20%">
+                                                            <center><?php echo $dates['Player Moderator Suggestions'];?></center>
+                                                         </td><!-- Col 5 -->
+                                                      </tr>
+                                                      <tr>
+                                                         <!-- Row 4 -->
+                                                         <td width="5%">
+                                                            <a href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Archive')?>"><img src="ForumsHomepage_files/PlayerModArchive.png" height="25" hspace="0" border="0" width="25"></a></td>
+                                                         <td width="49%">
+                                                            <a class="c" href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Archive')?>"><font color="#FFFFFF"><font color="#90C040">Player Moderator Archive</font></font></a><br><font color="#FFFFFF">Old messages (was RS Modding)</font></td>
+                                                         <td width="13%">
+                                                            <center><?php echo $posts['Player Moderator Archive'];?></center>
+                                                         </td><!-- Col 3 -->
+                                                         <td width="13%">
+                                                            <center><?php echo $list['Player Moderator Archive'];?></center>
+                                                         </td><!-- Col 4 -->
+                                                         <td width="20%">
+                                                            <center><?php echo $dates['Player Moderator Archive'];?></center>
+                                                         </td><!-- Col 5 -->
+                                                      </tr>
+                                                      <tr>
+                                                         <!-- Row 5 -->
+                                                         <td width="5%">
+                                                            <a href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Lounge')?>"><img src="ForumsHomepage_files/PlayerModLounge.png" height="25" hspace="0" border="0" width="25"></a></td>
+                                                         <td width="49%">
+                                                            <a class="c" href="ForumBoard/forumboard.php?category=<?php echo urlencode('Player Moderator Lounge')?>"><font color="#FFFFFF"><font color="#90C040">Player Moderator Lounge</font></font></a><br><font color="#FFFFFF">Place to relax</font></td>
+                                                         <td width="13%">
+                                                            <center><?php echo $posts['Player Moderator Lounge'];?></center>
+                                                         </td><!-- Col 3 -->
+                                                         <td width="13%">
+                                                            <center><?php echo $list['Player Moderator Lounge'];?></center>
+                                                         </td><!-- Col 4 -->
+                                                         <td width="20%">
+                                                            <center><?php echo $dates['Player Moderator Lounge'];?></center>
+                                                         </td><!-- Col 5 -->
+                                                      </tr>
+                                                   </table>
+                                                   <br>
+                                                <?php endif?>
                                              <font color="#FFFFFF">Official</font>
                                              <table cellpadding="2" cellspacing="1" border="0" width="490">
                                                 <tbody>
@@ -631,6 +761,12 @@ $result = mysqli_query($conn, "SELECT COUNT(category) as total,category, max(las
       </tr>
       </tbody>
    </table>
+
+
+
+
+
+
 
 </body>
 

@@ -1,4 +1,22 @@
-<?php session_starT();?>
+<?php 
+session_start();
+include "../connect.php";
+$result = mysqli_query($conn,"SELECT * FROM customersupport");
+$customersupport = [];
+while($row = mysqli_fetch_assoc($result)){
+   $title = htmlspecialchars_decode($row['title']);
+   $date = strtotime($row['date']);
+   $date_format = date('d-M-Y', $date);
+   $customersupport[] = '<tr>
+                        <td><a href="CustomerSupportNews/CustomerSupportNews.php?newsID='.$row['customerID'].'"
+                              target="_parent"
+                              class="c">'.$title.'</a>
+                        </td>
+                        <td align="right">
+                           '.$date_format.'</td>
+                     </tr>';
+}
+?>
 <html>
 
 <head>
@@ -72,7 +90,7 @@
                                     <tbody>
                                        <tr>
                                           <td class="e">
-                                             <center> <b>Customer Support</b><br> <a href="../title.html" class="c">Main
+                                             <center> <b>Customer Support</b><br> <a href="../title.php" class="c">Main
                                                    menu</a> </center>
                                           </td>
                                        </tr>
@@ -113,56 +131,13 @@
                                                                                        <center>
                                                                                           <table width="350">
                                                                                              <tbody>
-                                                                                                <tr>
-                                                                                                   <td><a href="https://web.archive.org/web/20040406062256if_/http://secure2.runescape.com/aff/runescape/mod/news/csnewsitem.cgi?cat=8&amp;page=1"
-                                                                                                         target="_parent"
-                                                                                                         class="c">Item
-                                                                                                         mover
-                                                                                                         temporarily
-                                                                                                         offline</a>
-                                                                                                   </td>
-                                                                                                   <td align="right">
-                                                                                                      5-Apr-2004</td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                   <td><a href="https://web.archive.org/web/20040406062256if_/http://secure2.runescape.com/aff/runescape/mod/news/csnewsitem.cgi?cat=8&amp;page=2"
-                                                                                                         target="_parent"
-                                                                                                         class="c">Biohazard
-                                                                                                         Problems</a>
-                                                                                                   </td>
-                                                                                                   <td align="right">
-                                                                                                      5-Apr-2004</td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                   <td><a href="https://web.archive.org/web/20040406062256if_/http://secure2.runescape.com/aff/runescape/mod/news/csnewsitem.cgi?cat=8&amp;page=3"
-                                                                                                         target="_parent"
-                                                                                                         class="c">Dragon
-                                                                                                         Stone / Amulet
-                                                                                                         of Glory</a>
-                                                                                                   </td>
-                                                                                                   <td align="right">
-                                                                                                      2-Apr-2004</td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                   <td><a href="https://web.archive.org/web/20040406062256if_/http://secure2.runescape.com/aff/runescape/mod/news/csnewsitem.cgi?cat=8&amp;page=4"
-                                                                                                         target="_parent"
-                                                                                                         class="c">Item
-                                                                                                         transfer
-                                                                                                         working
-                                                                                                         again</a></td>
-                                                                                                   <td align="right">
-                                                                                                      2-Apr-2004</td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                   <td><a href="https://web.archive.org/web/20040406062256if_/http://secure2.runescape.com/aff/runescape/mod/news/csnewsitem.cgi?cat=3&amp;page=1"
-                                                                                                         target="_parent"
-                                                                                                         class="c">Item
-                                                                                                         transfer
-                                                                                                         reminder</a>
-                                                                                                   </td>
-                                                                                                   <td align="right">
-                                                                                                      1-Apr-2004</td>
-                                                                                                </tr>
+                                                                                                <?php 
+                                                                                                if(isset($customersupport)){
+                                                                                                   foreach($customersupport as $c){
+                                                                                                      echo $c;
+                                                                                                   }
+                                                                                                }
+                                                                                                ?>                                                                                     
                                                                                              </tbody>
                                                                                           </table>
                                                                                        </center>

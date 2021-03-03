@@ -18,12 +18,17 @@
     $date = date('d M Y h:i', $dt);
     $from_user = $message['fromID'];
         
-    $stmt= $conn->prepare("SELECT username FROM users WHERE userID =?");
-    $stmt->bind_param("i",$from_user);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $from = $result->fetch_assoc();
- 
+    if($from_user != 0){
+      $stmt= $conn->prepare("SELECT username FROM users WHERE userID =?");
+      $stmt->bind_param("i",$from_user);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $from = $result->fetch_assoc();
+    }
+    else{
+       $from['username'] = "Jagex";
+    }
+
     $message_filtered = htmlspecialchars_decode($message['message']);
     
 ?>

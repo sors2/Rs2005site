@@ -1,38 +1,42 @@
 <?php
    session_start();
- 
+
    include "../connect.php";
+
    $result = mysqli_query($conn,"SELECT * FROM polls ORDER BY `date` DESC");
    $polls=[];
    while($row = mysqli_fetch_assoc($result)){
       $dt = strtotime($row["date"]);
       $date = date('d M Y', $dt);
- 
-      $stmt= $conn->prepare("SELECT userID,rolesID FROM users WHERE username = ?");
-      $stmt->bind_param("s", $_SESSION['username']);
-      $stmt->execute();   
-      $result2 = $stmt->get_result();
-      $user= $result2->fetch_assoc();
- 
+
+      include "../ban.php";
+      if(isset($_SESSION['username'])){
+         if ($stmt->execute()) {
+            $result4 = $stmt->get_result();
+            if(mysqli_num_rows($result)){
+               $ban = $result4->fetch_assoc();
+               $current = date("Y-m-d H:i:s");
+               if($ban['expire'] > $current){
+                  $banned = "set";
+               }
+            }
+         }
+         $stmt->close();
+      }
+
       $stmt= $conn->prepare("SELECT id FROM pollhistory WHERE pollID = ? AND userID = ?");
       $stmt->bind_param("ii", $row['pollID'],$user['userID']);
       $stmt->execute();   
       $result3 = $stmt->get_result();
- 
+
          $link ="";
-         if($user['rolesID'] == 3){
-            $link ="pollresults.php?pollID=".$row['pollID'];
-         }
-         if($row['status'] == 1){
-            $link ="pollresults.php?pollID=".$row['pollID'];
-         }
-         if(mysqli_num_rows($result3) > 0){
+         if($user['rolesID'] == 3 || $row['status'] == 1 || (mysqli_num_rows($result3) > 0) || isset($banned) ){
             $link ="pollresults.php?pollID=".$row['pollID'];
          }
          else{
             $link ="latestpoll.php?pollID=".$row['pollID'];
          }
- 
+
       $polls[] = '<tr>
                   <td align="left"><a
                   href="'.$link.'"
@@ -40,12 +44,12 @@
                   <td align="left">'. $date.'</td>
                   </tr>';
    }
- 
- 
+
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
- 
+
 <head>
    <style>
       <!--
@@ -63,27 +67,27 @@
          font-family: Arial, Helvetica, sans-serif;
          font-size: 13px;
       }
- 
+
       .b {
          border-style: outset;
          border-width: 3pt;
          border-color: #373737
       }
- 
+
       .b2 {
          border-style: outset;
          border-width: 3pt;
          border-color: #570700
       }
- 
+
       .e {
          border: 2px solid #382418
       }
- 
+
       .c {
          text-decoration: none
       }
- 
+
       A.c:hover {
          text-decoration: underline
       }
@@ -101,9 +105,24 @@
    <link media="all" type="text/css" rel="stylesheet" href="allpolls_files/main.css">
    <link href="allpolls_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
- 
-<body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
 
+<body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
+<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
+    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
+        <div style="float: left;">
+            <IMG width=44 height=59 src="../frame_files/lock.gif">
+        </div>
+        <?php if(isset($_SESSION['username'])):?>
+        <div style="float: left; padding-top: 8%; margin:left: 1%;">
+            <A href="../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
+            <A href="../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
+        </div>
+        <?php else:?>
+                <br>
+                <br>
+                <A href="../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
+        <?php endif?>
+    </div>
 <div>
    <table cellpadding="0" cellspacing="0" height="100%" width="100%">
       <tbody>
@@ -209,5 +228,5 @@
       </tbody>
    </table>
 </body>
- 
+
 </html>

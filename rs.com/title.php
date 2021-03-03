@@ -610,7 +610,7 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                         <?php if (isset($_SESSION['username'])) :?>
                                                                                                             <A class=whitelink href="securemenu/securemenu.php"><B>Subscribe</B></A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Subscribe</B></A>
+                                                                                                            <A class=whitelink href="login.php"><B>Subscribe</B></A>
                                                                                                         <?php endif ?>   
                                                                                                         </CENTER>
                                                                                                       </TD>
@@ -629,7 +629,7 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
                                                                                                             <A class=c href="securemenu/securemenu.php">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
+                                                                                                            <A class=c href="login.php">Login</A>
                                                                                                         <?php endif ?>
                                                                                                       </TD>
                                                                                                    </TR>
@@ -645,9 +645,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          bgColor=#474747>
                                                                                                          <CENTER>
                                                                                                             <?php if (isset($_SESSION['username'])) :?>
-                                                                                                                <A class=whitelink target="_top" href="securemenu/securemenu.php">Account Management</A>
+                                                                                                                <A class=whitelink href="securemenu/securemenu.php">Account Management</A>
                                                                                                             <?php else:?>
-                                                                                                                <A class=whitelink target="_top" href="login.php">Account Management</A>
+                                                                                                                <A class=whitelink href="login.php">Account Management</A>
                                                                                                             <?php endif ?>
                                                                                                          </CENTER>
                                                                                                       </TD>
@@ -664,9 +664,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                       <TD>Manage your Password and Recovery 
                                                                                                          Details.<BR>
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=c target="_top" href="securemenu/securemenu.php">Find More</A>
+                                                                                                            <A class=c href="securemenu/securemenu.php">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
+                                                                                                            <A class=c href="login.php">Login</A>
                                                                                                         <?php endif ?>
                                                                                                       </TD>
                                                                                                       </TD>
@@ -684,9 +684,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          bgColor=#474747>
                                                                                                          <CENTER>
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=whitelink target="_top" href="customersupport/customersupport.php"><B>Customer Support</B></A>
+                                                                                                            <A class=whitelink href="customersupport/customersupport.php"><B>Customer Support</B></A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Customer Support</B></A>
+                                                                                                            <A class=whitelink href="login.php"><B>Customer Support</B></A>
                                                                                                         <?php endif ?>
                                                                                                          </CENTER>
                                                                                                       </TD>
@@ -702,9 +702,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          width=48 border=0></A></TD>
                                                                                                       <TD>Questions?<BR>Contact our staff.<BR>
                                                                                                       <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=c target="_top" href="customersupport/customersupport.php">Find More</A>
+                                                                                                            <A class=c href="customersupport/customersupport.php">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
+                                                                                                            <A class=c href="login.php">Login</A>
                                                                                                         <?php endif ?>
                                                                                                    </TR>
                                                                                                 </TBODY>
@@ -719,9 +719,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          bgColor=#474747>
                                                                                                          <CENTER>
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=whitelink target="_top" href="messagecentre/messagecentre.html"><B>Message Centre</B></A>
+                                                                                                            <A class=whitelink href="messagecentre/messagecentre.php"><B>Message Centre</B></A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Message Centre</B></A>
+                                                                                                            <A class=whitelink href="login.php"><B>Message Centre</B></A>
                                                                                                         <?php endif ?>
                                                                                                          </CENTER>
                                                                                                       </TD>
@@ -731,15 +731,23 @@ while($row = mysqli_fetch_assoc($result))
                                                                                              <TABLE>
                                                                                                 <TBODY>
                                                                                                    <TR>
-                                                                                                      <TD><A 
+                                                                                                      <TD>
+                                                                                                      <?php if (isset($_SESSION['username'])) :?>
+                                                                                                            <A class=c href="messagecentre/messagecentre.php"><IMG 
+                                                                                                         height=75 src="../img/title/mms_inbox.jpg"
+                                                                                                         width=48 border=0></A>
+                                                                                                        <?php else:?>
+                                                                                                         <A 
                                                                                                          href="login.php"><IMG 
                                                                                                          height=75 src="../img/title/mms_inbox.jpg"
-                                                                                                         width=48 border=0></A></TD>
+                                                                                                         width=48 border=0></A>
+                                                                                                        <?php endif ?>
+                                                                                                      </TD>
                                                                                                       <TD>Your messages from our staff.<BR>
                                                                                                       <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=c target="_top" href="messagecentre/messagecentre.html">Find More</A>
+                                                                                                            <A class=c href="messagecentre/messagecentre.php">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
+                                                                                                            <A class=c href="login.php">Login</A>
                                                                                                         <?php endif ?>
                                                                                                    </TR>
                                                                                                 </TBODY>
@@ -754,11 +762,7 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                       <TD class=b background=../img/stoneback.gif
                                                                                                          bgColor=#474747>
                                                                                                          <CENTER>
-                                                                                                         <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=whitelink target="_top" href="forums/EnterForumsPage.php"><B>Forums</B></A>
-                                                                                                        <?php else:?>
-                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Forums</B></A>
-                                                                                                        <?php endif ?>
+                                                                                                            <A class=whitelink href="forums/EnterForumsPage.php"><B>Forums</B></A>
                                                                                                          </CENTER>
                                                                                                       </TD>
                                                                                                    </TR>
@@ -768,15 +772,12 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                 <TBODY>
                                                                                                    <TR>
                                                                                                       <TD><A 
-                                                                                                         href="login.php"><IMG 
+                                                                                                         href="forums/EnterForumsPage.php"><IMG 
                                                                                                          height=75 src="../img/title/mms_forums.jpg"
                                                                                                          width=48 border=0></A></TD>
                                                                                                       <TD>Discuss the game with fellow players!<BR>
-                                                                                                      <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=c target="_top" href="forums/EnterForumsPage.php">Find More</A>
-                                                                                                        <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
-                                                                                                        <?php endif ?></TD>
+                                                                                                            <A class=c href="forums/EnterForumsPage.php">Find More</A>
+                                                                                                        </TD>
                                                                                                    </TR>
                                                                                                 </TBODY>
                                                                                              </TABLE>
@@ -789,11 +790,7 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                       <TD class=b background=../img/stoneback.gif
                                                                                                          bgColor=#474747>
                                                                                                          <CENTER>
-                                                                                                         <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=whitelink target="_top" href="hiscores/hiscores.html"><B>Personal Hiscores</B></A>
-                                                                                                        <?php else:?>
-                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Personal Hiscores</B></A>
-                                                                                                        <?php endif ?>
+                                                                                                            <A class=whitelink href="hiscores/hiscores.html"><B>Personal Hiscores</B></A>
                                                                                                          </CENTER>
                                                                                                       </TD>
                                                                                                    </TR>
@@ -809,9 +806,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                       <TD>How do you rank compared to your 
                                                                                                          friends?<BR>
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=c target="_top" href="hiscores/hiscores.html">Find More</A>
+                                                                                                            <A class=c href="hiscores/hiscores.html">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
+                                                                                                            <A class=c href="login.php">Login</A>
                                                                                                         <?php endif ?>
                                                                                                       </TD>
                                                                                                    </TR>
@@ -828,9 +825,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          bgColor=#474747>
                                                                                                          <CENTER>
                                                                                                          <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=whitelink target="_top" href="polls/latestpoll.htm"><B>Lates Poll</B></A>
+                                                                                                            <A class=whitelink href="polls/latestpoll.htm"><B>Lates Poll</B></A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=whitelink target="_top" href="login.php"><B>Latest Poll</B></A>
+                                                                                                            <A class=whitelink href="login.php"><B>Latest Poll</B></A>
                                                                                                         <?php endif ?>
                                                                                                          </CENTER>
                                                                                                       </TD>
@@ -846,9 +843,9 @@ while($row = mysqli_fetch_assoc($result))
                                                                                                          width=48 border=0></A></TD>
                                                                                                       <TD>What do you enjoy most about Quests? <BR>
                                                                                                       <?php if (isset($_SESSION['username'])) :?>
-                                                                                                            <A class=c target="_top" href="polls/latestpoll.htm">Find More</A>
+                                                                                                            <A class=c href="polls/latestpoll.htm">Find More</A>
                                                                                                         <?php else:?>
-                                                                                                            <A class=c target="_top" href="login.php">Login</A>
+                                                                                                            <A class=c href="login.php">Login</A>
                                                                                                         <?php endif ?></TD>
                                                                                                    </TR>
                                                                                                 </TBODY>
