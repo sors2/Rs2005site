@@ -1,10 +1,129 @@
 <?php
     session_start();
     include "../../../../connect.php";
-    $result = mysqli_query($conn,"SELECT * FROM reports ORDER BY `status` ASC");
-    $reports=[];
-    $numberOfUnread = 0;
-    while($row = mysqli_fetch_assoc($result)){
+if(!isset($_GET['page'])){
+    $page = 1;
+}
+else{
+      $page = $_GET['page'];
+}
+if(isset($_GET['category'])){
+  $stmt = $conn->prepare("SELECT category FROM threads WHERE threadID=?");
+  $stmt->bind_param("i",$_GET['threadID']);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $category = $result -> fetch_assoc();
+  $cat = $category['category'];
+  $result= mysqli_query($conn, "SELECT * FROM reports WHERE category = $cat ");
+  $back = 'EscalateBoard.php?threadID='.$_GET['threadID'].'';
+  $title = '<img class="imiddle" title="Refresh" alt="Refresh"
+            src="ReadReports_files/refresh.png" border="0" height="13" hspace="0" width="13"><b>Runescape Forums - '.$cat.'</b>';
+}
+elseif(isset($_GET['threadID'])){
+  $stmt = $conn->prepare("SELECT category,title,isLocked,isSticky FROM threads WHERE threadID=?");
+  $stmt->bind_param("i",$_GET['threadID']);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $category = $result -> fetch_assoc();
+
+  $locked ="";
+  $stickied ="";
+  if($category['isLocked'] == 1){
+    $locked =  `<img src="ReadReports_files/locked.png" alt="" title="" height="13" width="13">`;
+  }
+  if($category['isSticky'] == 1){
+    $stickied = '<img src="ReadReports_files/stickied.png" alt="" title="" height="13" width="13">';
+  }
+
+  $thread = $_GET['threadID'];
+  $result= mysqli_query($conn, "SELECT * FROM reports WHERE threadID = $thread ");
+  $back = 'EscalateThread.php?threadID='.$_GET['threadID'].'';
+  $title = '<img class="imiddle" title="Refresh" alt="Refresh"
+            src="ReadReports_files/refresh.png" border="0" height="13" hspace="0" width="13"><b>Runescape Forums - '.$category['category'].' - '.$category['title'].''.$stickied.''.$locked.'</b>';
+}
+elseif(isset($_GET['replyID'])){
+  $reply = $_GET['replyID'];
+
+  $stmt = $conn->prepare("SELECT threadID FROM replies WHERE replyID=?");
+  $stmt->bind_param("i",$_GET['replyID']);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $reply = $result -> fetch_assoc();
+
+  $stmt = $conn->prepare("SELECT category,title,isLocked,isSticky FROM threads WHERE threadID=?");
+  $stmt->bind_param("i",$reply['threadID']);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $category = $result -> fetch_assoc();
+
+  $result= mysqli_query($conn, "SELECT * FROM reports WHERE replyID = $reply");
+  $back = 'Escalate.php?replyID='.$_GET['replyID'].'';
+  $title = '<img class="imiddle" title="Refresh" alt="Refresh"
+            src="ReadReports_files/refresh.png" border="0" height="13" hspace="0" width="13"><b>Runescape Forums - '.$category['category'].' - '.$category['title'].''.$stickied.''.$locked.'</b>';
+}
+else{
+  header("Location: ../../../../forums/forums.php");
+}
+$num_per_pages = mysqli_num_rows($result);
+$posts_per_page = 3;
+if(mysqli_num_rows($result) > 0)
+{
+      $total_results  = mysqli_num_rows($result);
+      $num_per_pages = ceil($total_results/$posts_per_page);
+      $start_num = ($page-1) * $posts_per_page;
+}
+else{
+      $num_per_pages  = 1;
+      $start_num = 0;
+}
+ 
+if(isset($_GET['category'])){
+  $result = mysqli_query($conn,"SELECT * FROM reports  WHERE category = $cat ORDER BY `status` ASC LIMIT $start_num,$posts_per_page");
+}
+elseif(isset($_GET['threadID'])){
+  $result = mysqli_query($conn,"SELECT * FROM reports WHERE threadID = $thread ORDER BY `status` ASC LIMIT $start_num,$posts_per_page");
+}
+elseif(isset($_GET['replyID'])){
+  $result = mysqli_query($conn,"SELECT * FROM reports WHERE replyID = $reply ORDER BY `status` ASC LIMIT $start_num,$posts_per_page");
+}
+
+$reports=[];
+$numberOfUnread = 0;
+$line_break = 0;
+while($row = mysqli_fetch_assoc($result)){
+
+        $stmt = $conn->prepare("UPDATE reports SET `page` = ? WHERE reportID = ?");
+        $stmt->bind_param("ii", $page,$row['reportID']);
+        $stmt->execute(); 
+
+      if($row['status'] == 1 && $line_break == 0){
+          $line_break = 1;
+          $borders = '<tr>
+                        <!-- Row 1 -->
+                        <td bgcolor="#0B0B0B" width="75px">
+                          <hr style="border:2px dotted #ffffff;">
+                        </td><!-- Col 1 -->
+                        <td bgcolor="#101010">
+                          <hr style="border:2px dotted #ffffff;">
+                        </td><!-- Col 2 -->
+                        <td bgcolor="#0B0B0B" width="80px">
+                          <hr style="border:2px dotted #ffffff;">
+                        </td><!-- Col 3 -->
+                        <td bgcolor="#101010">
+                          <hr style="border:2px dotted #ffffff;">
+                        </td><!-- Col 4 -->
+                        <td bgcolor="#0B0B0B" width="82px">
+                          <hr style="border:2px dotted #ffffff;">
+                        </td><!-- Col 5 -->
+                        <td bgcolor="#101010">
+                          <hr style="border:2px dotted #ffffff;">
+                        </td>
+                      </tr>';
+      }
+      else{
+          $borders = "";
+      }
+        
 
         $stmt = $conn->prepare("SELECT title FROM threads WHERE threadID=?");
         $stmt->bind_param("i",$row['threadID']);
@@ -49,7 +168,7 @@
           $accepted = "";
         }
 
-        $reports[] = '<tr><!-- Row 2 -->
+        $reports[] = ''.$borders.'<tr><!-- Row 2 -->
                         <td bgcolor="#0B0B0B">'.$date.' </td><!-- Col 1 -->
                         <td bgcolor="#101010">'.$row['message'].'</td><!-- Col 2 -->
                         <td bgcolor="#0B0B0B"><a href="../Profile/ForumProfile.php?user='.$user['username'].'" class="c">'.$user['username'].'</a></td><!-- Col 3 -->
@@ -152,31 +271,165 @@
                         <tbody>
                           <tr>
                             <td class="e">
-                              <center><img class="imiddle" title="Refresh" alt="Refresh"
-                                  src="ReadReports_files/refresh.png" border="0" height="13" hspace="0" width="13">
-                                <b>Runescape Forums - Tech Support - Changing Screen Resolution?</b> <img
-                                  src="ReadReports_files/stickied.png" alt="" title="" height="13" width="13"> <img
-                                  src="ReadReports_files/locked.png" alt="" title="" height="13" width="13">
+                              <center><?php echo $title;?>
                                 <br><b>Escalate - Read Reports</b>
                                 <br>
                                 <table border="0" width="220px">
                                   <tbody>
                                     <tr>
                                       <!-- Row 1 -->
-                                      <td><img class="imiddle" title="first" alt="first"
-                                          src="ReadReports_files/first.png" border="0" height="13" hspace="0"
-                                          width="26">&nbsp;<img class="imiddle" title="previous" alt="previous"
-                                          src="ReadReports_files/previous.png" border="0" height="13" hspace="0"
-                                          width="26">&nbsp;</td><!-- Col 1 -->
-                                      <td width="150px">page<input size="3" id="uid" value="2"> of 3</td><!-- Col 2 -->
-                                      <td><img class="imiddle" title="next" alt="next" src="ReadReports_files/next.png"
-                                          border="0" height="13" hspace="0" width="26"><img class="imiddle" title="last"
-                                          alt="last" src="ReadReports_files/last.png" border="0" height="13" hspace="0"
-                                          width="26"></td><!-- Col 3 -->
+                                      <?php
+
+                                        $next = $page + 1;
+                                        $prev = $page - 1;
+
+                                                                                                                                                                                       
+                                                                                                                                                                if($page == 1){
+                                                                                                                                                                        if($num_per_pages > 1){
+                                                                                                                                                                                
+                                                                                                                                                                                echo'<td><img src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"> <img
+                                                                                                                                                                                src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 1 -->
+                                                                                                                                                                                <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text">
+                                                                                                                                                                                        of
+                                                                                                                                                                                        '.$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 2 -->
+                                                                                                                                                                                <td><a href="ReadReports.php?&page='.$next.'"><img src="ReadReports_files/next.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                                <a href="ReadReports.php?&page='.$num_per_pages.'">
+                                                                                                                                                                                                <img
+                                                                                                                                                                                                src="ReadReports_files/last.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 3 -->';
+                                                                                                                                                                        }
+                                                                                                                                                                        else{
+                                                                                                                                                                                echo'<td><img src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"><img
+                                                                                                                                                                                src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"> 
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 1 -->
+                                                                                                                                                                                <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text"> of ' .$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 2 -->
+                                                                                                                                                                                <td> <img src=""
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"> <img
+                                                                                                                                                                                                src=""
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26">
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 3 -->';
+                                                                                                                                                                        }
+                                                                                                                                                                }
+                                                                                                                                                                elseif($page > 1 && $page == $num_per_pages){
+                                                                                                                                                                        echo'<td><a href="ReadReports.php?&page=1"><img src="ReadReports_files/first.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"></a>
+                                                                                                                                                                        <a href="ReadReports.php?&page='.$prev.'">
+                                                                                                                                                                        <img
+                                                                                                                                                                        src="ReadReports_files/previous.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"></a>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 1 -->
+                                                                                                                                                                        <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text">
+                                                                                                                                                                                        of
+                                                                                                                                                                                        '.$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                        <!-- Col 2 -->
+                                                                                                                                                                        <td><img src="" alt=""
+                                                                                                                                                                                        title=""
+                                                                                                                                                                                        height="13"
+                                                                                                                                                                                        width="26">
+                                                                                                                                                                                        <img
+                                                                                                                                                                                        src=""
+                                                                                                                                                                                        alt=""
+                                                                                                                                                                                        title=""
+                                                                                                                                                                                        height="13"
+                                                                                                                                                                                        width="26">
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 3 -->';
+                                                                                                                                                                }
+                                                                                                                                                                else{
+                                                                                                                                                                        echo'<td><a href="ReadReports.php?&page=1"><img src="ReadReports_files/first.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"></a>
+                                                                                                                                                                        <a href="ReadReports.php?&page='.$prev.'">
+                                                                                                                                                                        <img
+                                                                                                                                                                        src="ReadReports_files/previous.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"> 
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 1 -->
+                                                                                                                                                                        <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text">
+                                                                                                                                                                                                of
+                                                                                                                                                                                        '.$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 2 -->
+                                                                                                                                                                        <td><a href="ReadReports.php?&page='.$next.'"><img src="ReadReports_files/next.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                                <a href="ReadReports.php?&page='.$num_per_pages.'">
+                                                                                                                                                                                                <img
+                                                                                                                                                                                                src="ReadReports_files/last.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 3 -->';
+                                                                                                                                                                }
+                                                                                                                                                                ?>
                                     </tr>
                                   </tbody>
                                 </table>
-                                <a href="Escalate.htm" class="c">Back to Escalate</a>
+                                <a href="<?php echo $back;?>" class="c">Back to Escalate</a>
                                 <br>
                                 <div style="text-align:left;"><b>Reports:</b></div>
                                 <br>
@@ -216,20 +469,159 @@
                                   <tbody>
                                     <tr>
                                       <!-- Row 1 -->
-                                      <td><img class="imiddle" title="first" alt="first"
-                                          src="ReadReports_files/first.png" border="0" height="13" hspace="0"
-                                          width="26">&nbsp;<img class="imiddle" title="previous" alt="previous"
-                                          src="ReadReports_files/previous.png" border="0" height="13" hspace="0"
-                                          width="26">&nbsp;</td><!-- Col 1 -->
-                                      <td width="150">page<input size="3" id="uid" value="2"> of 3</td><!-- Col 2 -->
-                                      <td><img class="imiddle" title="next" alt="next" src="ReadReports_files/next.png"
-                                          border="0" height="13" hspace="0" width="26">&nbsp;<img class="imiddle"
-                                          title="last" alt="last" src="ReadReports_files/last.png" border="0"
-                                          height="13" hspace="0" width="26">&nbsp;</td><!-- Col 3 -->
+                                      <?php
+
+                                        $next = $page + 1;
+                                        $prev = $page - 1;
+
+                                                                                                                                                                                       
+                                                                                                                                                                if($page == 1){
+                                                                                                                                                                        if($num_per_pages > 1){
+                                                                                                                                                                                
+                                                                                                                                                                                echo'<td><img src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"> <img
+                                                                                                                                                                                src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 1 -->
+                                                                                                                                                                                <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text">
+                                                                                                                                                                                        of
+                                                                                                                                                                                        '.$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 2 -->
+                                                                                                                                                                                <td><a href="ReadReports.php?&page='.$next.'"><img src="ReadReports_files/next.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                                <a href="ReadReports.php?&page='.$num_per_pages.'">
+                                                                                                                                                                                                <img
+                                                                                                                                                                                                src="ReadReports_files/last.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 3 -->';
+                                                                                                                                                                        }
+                                                                                                                                                                        else{
+                                                                                                                                                                                echo'<td><img src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"><img
+                                                                                                                                                                                src=""
+                                                                                                                                                                                alt=""
+                                                                                                                                                                                title=""
+                                                                                                                                                                                height="13"
+                                                                                                                                                                                width="26"> 
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 1 -->
+                                                                                                                                                                                <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text"> of ' .$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 2 -->
+                                                                                                                                                                                <td> <img src=""
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"> <img
+                                                                                                                                                                                                src=""
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26">
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 3 -->';
+                                                                                                                                                                        }
+                                                                                                                                                                }
+                                                                                                                                                                elseif($page > 1 && $page == $num_per_pages){
+                                                                                                                                                                        echo'<td><a href="ReadReports.php?&page=1"><img src="ReadReports_files/first.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"></a>
+                                                                                                                                                                        <a href="ReadReports.php?&page='.$prev.'">
+                                                                                                                                                                        <img
+                                                                                                                                                                        src="ReadReports_files/previous.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"></a>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 1 -->
+                                                                                                                                                                        <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text">
+                                                                                                                                                                                        of
+                                                                                                                                                                                        '.$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                        <!-- Col 2 -->
+                                                                                                                                                                        <td> <img src=""
+                                                                                                                                                                                        alt=""
+                                                                                                                                                                                        title=""
+                                                                                                                                                                                        height="13"
+                                                                                                                                                                                        width="26">
+                                                                                                                                                                                        <img
+                                                                                                                                                                                        src=""
+                                                                                                                                                                                        alt=""
+                                                                                                                                                                                        title=""
+                                                                                                                                                                                        height="13"
+                                                                                                                                                                                        width="26">
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 3 -->';
+                                                                                                                                                                }
+                                                                                                                                                                else{
+                                                                                                                                                                        echo'<td><a href="ReadReports.php?&page=1"><img src="ReadReports_files/first.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"></a>
+                                                                                                                                                                        <a href="ReadReports.php?&page='.$prev.'">
+                                                                                                                                                                        <img
+                                                                                                                                                                        src="ReadReports_files/previous.png"
+                                                                                                                                                                        alt=""
+                                                                                                                                                                        title=""
+                                                                                                                                                                        height="13"
+                                                                                                                                                                        width="26"> 
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 1 -->
+                                                                                                                                                                        <td>page <input value="'.$page.'"
+                                                                                                                                                                                                id="uid"
+                                                                                                                                                                                                type="text">
+                                                                                                                                                                                        of
+                                                                                                                                                                                        '.$num_per_pages.'
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <!-- Col 2 -->
+                                                                                                                                                                        <td><a href="ReadReports.php?&page='.$next.'"><img src="ReadReports_files/next.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                                                <a href="ReadReports.php?&page='.$num_per_pages.'">
+                                                                                                                                                                                                <img
+                                                                                                                                                                                                src="ReadReports_files/last.png"
+                                                                                                                                                                                                alt=""
+                                                                                                                                                                                                title=""
+                                                                                                                                                                                                height="13"
+                                                                                                                                                                                                width="26"></a>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <!-- Col 3 -->';
+                                                                                                                                                                }
+                                                                                                                                                                ?>
                                     </tr>
                                   </tbody>
                                 </table>
-                                <center><a href="Escalate.htm" class="c">Back to Escalate</a>
+                                <center><a href="<?php echo $back;?>" class="c">Back to Escalate</a>
                                   <br>
                                   <center>
 

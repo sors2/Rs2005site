@@ -159,6 +159,7 @@ while($row = mysqli_fetch_assoc($result)){
     </tr>';
     }
     else{
+            $colour = '#000000';
          $view[]='  <tr>
                     <td align="left" width="285px">
                             <b>Threadname</b>
@@ -172,7 +173,7 @@ while($row = mysqli_fetch_assoc($result)){
                     </tr>
          <tr bgcolor="#0B0B0B">
          <td align="left" width="285px"><div style="margin-left:3px">'.$sticky.''.$locked.'
-            <a href="../../../../forums/ForumBoard/ThreadCategory.php?category='.urlencode($thread['category']).'&page='.$report_thread['page'].'" class="c">' . $thread["title"] . '</a></div>
+            <a href="../../../../forums/ForumThread/forumthread.php?threadID='.$report['threadID'].'" class="c">' . $thread["title"] . '</a></div>
             started by <a href="../PlayerModTools/PlayerModForumProfile.php?user='.urlencode($user['username']).'" class="c">' . $user['username'] . '</a></td><!-- Col 1 -->
         <td align="center" valign="middle" width="64px">' . $report_thread['total_posts'] . '</td><!-- Col 2 -->
         <td align="center" valign="middle">'.  $last_post .' by ' . $last_user["username"] .'</td></tr>';
@@ -300,11 +301,11 @@ mysqli_close($conn);
                                                                                                                                         Add
                                                                                                                                         Notes</b>
                                                                                                                                 <br>
-                                                                                                                                <a href="ReadReports.php"
+                                                                                                                                <a href="ReadReportsView.php?reportID=<?php echo $reportID;?>"
                                                                                                                                         class="c">Back
                                                                                                                                         to
                                                                                                                                         Read
-                                                                                                                                        Reports</a>
+                                                                                                                                        Report View</a>
                                                                                                                                 <br>
                                                                                                                                 <br>This
                                                                                                                                 message
@@ -317,7 +318,7 @@ mysqli_close($conn);
                                                                                                                                 <br>
                                                                                                                                 <table cellspacing="0"
                                                                                                                                         border="0"
-                                                                                                                                        width="100%" style="background: none repeat scroll 0% 0% <?php echo $colour;?> ;
+                                                                                                                                        width="100%" style="background: none repeat scroll 0% 0% <?php echo $colour;?>" ;
                                                                                                                                         <tbody>
                                                                                                                                         <?php
                                                                                                                                                         foreach($view as $v){
@@ -341,11 +342,11 @@ mysqli_close($conn);
                                                                                                                                         <br>
                                                                                                                                         </form>
                                                                                                                                         <br>
-                                                                                                                                        <center><a href="ReadReports.php"
-                                                                                                                                                        class="c">Back
-                                                                                                                                                        to
-                                                                                                                                                        Read
-                                                                                                                                                        Reports</a>
+                                                                                                                                        <center><a href="ReadReportsView.php?reportID=<?php echo $reportID;?>"
+                                                                                                                                        class="c">Back
+                                                                                                                                        to
+                                                                                                                                        Read
+                                                                                                                                        Report View</a>
                                                                                                                                                 <br>
                                                                                                                                                 <center>
 

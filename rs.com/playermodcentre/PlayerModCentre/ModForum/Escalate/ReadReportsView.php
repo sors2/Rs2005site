@@ -9,6 +9,29 @@
     $current_user= $result->fetch_assoc();
 
     $reportID = $_GET['reportID'];
+
+    if (isset($_POST["accept"])){
+
+        $stmt = $conn->prepare("UPDATE reports SET accepted_by = ?,`status`=? WHERE reportID = ?");
+        $n=1;
+        $stmt->bind_param("iii",$current_user['userID'],$n,$reportID);
+        $stmt->execute();
+        mysqli_close($conn);
+        header("Location: ReadReports.php");
+    }
+    if (isset($_POST["decline"])){
+        $reportID = $_GET['reportID'];
+        include "../../../../connect.php";
+        
+        $stmt = $conn->prepare("UPDATE reports SET accepted_by = ?,`status`=? WHERE reportID = ?");
+        $n=0;
+        $empty = NULL;
+        $stmt->bind_param("sii",$empty,$n,$reportID);
+        $stmt->execute();
+        mysqli_close($conn);
+        header("Location: ReadReports.php");
+    }
+
     $stmt = $conn->prepare("SELECT replyID,threadID,thread_post,`status`,accepted_by,read_flag FROM reports WHERE reportID=?");
     $stmt->bind_param("i",$reportID);
     $stmt->execute();
@@ -66,8 +89,6 @@
         $stmt->execute();
         $result = $stmt->get_result();
         $user= $result->fetch_assoc(); 
-        
-        $colour = 'rgb(11,11,11)';
     
 }
 
@@ -80,10 +101,10 @@
     $sticky="";
     $locked="";
     if($thread['isSticky'] == 1){
-        $sticky = '<img src="ReadReportsView_files/stickied.png" alt="" title="" height="13" width="13">';
+        $sticky = '<img src="AdminToolsReports&amp;MarkedMessagesView_files/stickied.png" alt="" title="" height="13" width="13">';
     }
     if($thread['isLocked'] == 1){
-        $locked = '<img src="ReadReportsView_files/locked.png" alt="" title="" height="13" width="13">';
+        $locked = '<img src="AdminToolsReports&amp;MarkedMessagesView_files/locked.png" alt="" title="" height="13" width="13">';
     }
 
     if($report['read_flag'] == 0){
@@ -163,6 +184,7 @@
         </tr>';
         }
         else{
+                $colour = '#000000';
              $view[]='  <tr>
                         <td align="left" width="285px">
                                 <b>Threadname</b>
@@ -176,12 +198,32 @@
                         </tr>
              <tr bgcolor="#0B0B0B">
              <td align="left" width="285px"><div style="margin-left:3px">'.$sticky.''.$locked.'
-                <a href="../../../../forums/ForumBoard/ThreadCategory.php?category='.urlencode($thread['category']).'&page='.$report_thread['page'].'" class="c">' . $thread["title"] . '</a></div>
+             <a href="../../../../forums/ForumThread/forumthread.php?threadID='.$report['threadID'].'" class="c">' . $thread["title"] . '</a></div>
                 started by <a href="../Profile/ForumProfile.php?user='.urlencode($user['username']).'" class="c">' . $user['username'] . '</a></td><!-- Col 1 -->
             <td align="center" valign="middle" width="64px">' . $report_thread['total_posts'] . '</td><!-- Col 2 -->
             <td align="center" valign="middle">'.  $last_post .' by ' . $last_user["username"] .'</td></tr>';
         }
         
+    }
+
+    $add_notes=[];
+    $stmt = $conn->prepare("SELECT author,note FROM reportnotes WHERE reportID =?");
+    $stmt->bind_param("i",$_GET['reportID']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($row = mysqli_fetch_assoc($result)){
+        $stmt = $conn->prepare("SELECT username FROM users WHERE userID=?");
+        $stmt->bind_param("i",$row['author']);
+        $stmt->execute();
+        $result2 = $stmt->get_result();
+        $notes_user = $result2 -> fetch_assoc();  
+
+        $add_notes[]='<tr><!-- Row 1 -->
+                        <td>'.$row['note'].'
+                        <br>
+                        <br>
+                        <br><div align="right">'.$notes_user['username'].'</div></td><!-- Col 1 -->
+                        </tr>';
     }
 
     $add_notes=[];
@@ -337,7 +379,7 @@
                                                                                                                                 <a href="ReadReports.php"
                                                                                                                                         class="c">Back
                                                                                                                                         to
-                                                                                                                                        Reports</a>
+                                                                                                                                        Report</a>
                                                                                                                                 <br>
                                                                                                                                 <br>This
                                                                                                                                 message
@@ -391,7 +433,7 @@
                                                                                                                                         ?>
                                                                                                                                         </tbody>
                                                                                                                                 </table>
-                                                                                                                                <form action="CheckReportView.php?reportID=<?php echo $_GET['reportID'];?>" method="post">
+                                                                                                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]."?reportID=$reportID");?>" method="POST">
                                                                                                                                 <br>
                                                                                                                                 <center>
                                                                                                                                     <?php if ($report['status'] == 1):?>

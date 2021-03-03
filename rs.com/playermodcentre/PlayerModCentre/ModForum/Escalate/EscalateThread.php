@@ -55,7 +55,7 @@
     
     $threadReport = 
                 '<td align="left" width="285px"><div style="margin-left:3px">'.$sticky.''.$locked.'
-	            <a href="../../../../forums/ForumBoard/ThreadCategory.php?category='.urlencode($thread['category']).'&page='.$thread['page'].'" class="c">' . $thread["title"] . '</a></div>
+                <a href="../../../../forums/ForumThread/forumthread.php?threadID='.$threadID.'" class="c">' . $thread["title"] . '</a></div>
 	            started by <a href="../Profile/ForumProfile.php?user='.urlencode($user['username']).'" class="c">' . $user['username'] . '</a></td><!-- Col 1 -->
                 <td align="center" valign="middle" width="64px">' . $thread['total_posts'] . '</td><!-- Col 2 -->
                 <td align="center" valign="middle">'. $date .' by ' . $last_user["username"] .'</td>';
@@ -258,7 +258,7 @@
                                                                                                                                                                 <br><a href="../PlayerModThread/ThreadReport.php?threadID=<?php echo $_GET['threadID'];?>" class="c">Report</a>&#8195;
                                                                                                                                                                 <a href="../PlayerModThread/ThreadMark.php?threadID=<?php echo $_GET['threadID'];?>" class="c">Mark</a> &#8195;
                                                                                                                                                                 <?php if ($current_user['rolesID'] > 2):?>
-                                                                                                                                                                <a href="ReadReports.php" class="c">Read Reports</a>&#8195;
+                                                                                                                                                                <a href="ReadReports.php?threadID=<?php echo $_GET['threadID'];?>" class="c">Read Reports</a>&#8195;
                                                                                                                                                                 <a href="RecentInfractions.htm" class="c">Recent Infractions</a>
                                                                                                                                                                 <?php endif?>
                                                                                                                                                                 <br>

@@ -204,7 +204,7 @@ $previous_message = htmlspecialchars_decode($reply['reply']);
                                                                                                                                                                 <a href="../PlayerModThread/MessageMark.php?replyID=<?php echo $_GET['replyID'];?>" class="c">Mark</a> &#8195;
                                                                                                                                                                 <br>
                                                                                                                                                                 <?php if ($current_user['rolesID'] > 2):?>
-                                                                                                                                                                <a href="ReadReports.php" class="c">Read Reports</a>&#8195;
+                                                                                                                                                                <a href="ReadReports.php?replyID=<?php echo $_GET['replyID'];?>" class="c">Read Reports</a>&#8195;
                                                                                                                                                                 <a href="RecentInfractions.htm" class="c">Recent Infractions</a>
                                                                                                                                                                 <?php endif?>
                                                                                                                                                                         
