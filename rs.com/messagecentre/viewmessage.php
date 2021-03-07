@@ -111,7 +111,7 @@
                                              <td><img class="imiddle" title="previous" alt="previous"
                                                    src="../../img/previous.png" hspace="0" height="13" border="0" width="26">
                                              </td><!-- Col 2 -->
-                                             <td>page <input size="3" id="uid" value="2"> of 3</td><!-- Col 3 -->
+                                             <td>page <input size="3" id="uid" value="1"> of 3</td><!-- Col 3 -->
                                              <td><img class="imiddle" title="next" alt="next" src="../../img/next.png"
                                                    hspace="0" height="13" border="0" width="26"></td><!-- Col 4 -->
                                              <td><img class="imiddle" title="last" alt="last" src="../../img/last.png"
