@@ -84,10 +84,6 @@ A.c:hover {text-decoration:underline}
                 <tbody>
                         <tr>
                                 <td class="e">  
-										<center>
-										<b>Feedback Support</b>
-										</center>
-										<br>
                                         <div style="float: left; text-align: left;">Use this form for queries that don't fit into any of the other categories.<br>
 										You may <a href="../../customersupport2.php" class="c">go back</a> if you think your query fits into another category.</div>
                                         <br>
