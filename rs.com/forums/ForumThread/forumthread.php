@@ -456,13 +456,13 @@ $user_current = $result->fetch_assoc();
                               <tr>
                                  <td class=e>
                                     <center>
-                                       <img class="imiddle" title="Refresh" alt="Refresh" src="../forumthread/img/refresh.png" hspace="0" height="13" border="0" width="13">
+                                       <img class="imiddle" title="Refresh" alt="Refresh" src="img/refresh.png" hspace="0" height="13" border="0" width="13">
                                        <b>Runescape Forums - <?php echo urldecode($thread_status['category']);?> - <?php echo $thread_status['title'];?> </b> 
                                        <?php if($sticky==1):?>
-                                       <img ccID="2040" src="../forumthread/img/stickied.png" width="13" height="13" alt="" title="" />
+                                       <img ccID="2040" src="img/stickied.png" width="13" height="13" alt="" title="" />
                                        <?php endif?>
                                        <?php if($locked==1):?>
-                                       <img ccID="2125" src="../forumthread/img/locked.png" width="13" height="13" alt="" title="" />
+                                       <img ccID="2125" src="img/locked.png" width="13" height="13" alt="" title="" />
                                        <?php endif?>
                                        <br><a href="../ForumBoard/forumboard.php?category=<?php echo urlencode($thread_status['category']);?>" class="c">Back to threads page</a>
                                             <?php if(!empty($locked) || !isset($_SESSION['username']) || isset($muted)):?>
