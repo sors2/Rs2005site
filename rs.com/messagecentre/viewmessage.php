@@ -51,7 +51,7 @@
    <meta content="runescape, free, games, online, multiplayer, magic, spells, java, MMORPG, MPORPG, gaming"
       name="Keywords">
    <link rel="shortcut icon" href="favicon.ico">
-   <link media="all" type="text/css" rel="stylesheet" href="css/main.css">
+   <link media="all" type="text/css" rel="stylesheet" href="../../css/main.css">
    <link href="../../css/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
  
