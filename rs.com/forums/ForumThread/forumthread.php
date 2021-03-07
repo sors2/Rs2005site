@@ -346,13 +346,13 @@ $user_current = $result->fetch_assoc();
                 if(isset($user_current['rolesID'])){
                         if($user_current['rolesID'] > 1)
                         {
-                                $edits_p = ' <a href="../ForumMessages/EditMessage.php?replyID='.$row2['replyID'].'"><img ccID="2688" src="../ForumThread/img/edit.png" width="30" height="15" alt="" title="edit" /></a>';
+                                $edits_p = ' <a href="../ForumMessages/EditMessage.php?replyID='.$row2['replyID'].'"><img ccID="2688" src="img/edit.png" width="30" height="15" alt="" title="edit" /></a>';
                                 $escalate= '<br>&emsp;&emsp;<a href="../../playermodcentre/PlayerModCentre/ModForum/Escalate/Escalate.php?replyID='.$row2['replyID'].'">Escalate</a>';
                                 $hide = '<br>&emsp;&emsp;<a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/HidePost.php?replyID='.$row2['replyID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/hide.png" alt="" title="hide" height="15" width="30"></a> <a href="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/UnhidePost.php?replyID='.$row2['replyID'].'"><img src="../../playermodcentre/PlayerModCentre/ModForum/PlayerModThread/Thread_files/unhide.png" alt="" title="unhide" height="15" width="30"></a>';
                         }
                         else{
                                 if($_SESSION['username'] == $user['username'] && !isset($muted)){
-                                        $edits_p = '<a href="../ForumMessages/EditPost.php?replyID='.$row2['replyID'].'"><img ccID="2688" src="../ForumThread/img/edit.png" width="30" height="15" alt="" title="edit" /></a>';
+                                        $edits_p = '<a href="../ForumMessages/EditPost.php?replyID='.$row2['replyID'].'"><img ccID="2688" src="img/edit.png" width="30" height="15" alt="" title="edit" /></a>';
                                 }
                 
                         }
