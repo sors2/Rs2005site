@@ -207,8 +207,6 @@ while($row = mysqli_fetch_assoc($result)){
                                                 <?php endif?>
                                                 </form>
                                              </center>
-                                             <table border="0" cellpadding="2" cellspacing="1" width="455">
-                                             </table>
                                           </td>
                                        </tr>
                                     </tbody>
