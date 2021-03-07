@@ -89,7 +89,7 @@ A.c:hover {text-decoration:underline}
 										</center>
 										<br>
                                         <div style="float: left; text-align: left;">Use this form for queries that don't fit into any of the other categories.<br>
-										You may<a href="../../customersupport2.php" class="c">go back</a> if you think your query fits into another category.
+										You may<a href="../../customersupport2.php" class="c">go back</a> if you think your query fits into another category.</div>
                                         <br>
 										<center>
 										<table width="400px">
@@ -108,9 +108,9 @@ A.c:hover {text-decoration:underline}
 										</td>
 										</tr>
 										</table>
-										<center>
+										</center>
                                         </form>
-                                        </div>
+                                        
                                 </td>
                         </tr>
                 </tbody>
