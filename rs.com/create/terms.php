@@ -198,7 +198,7 @@ You agree that for the purpose of preventing offensive language and cheating we 
 If you are the victim of the sort of behaviour described above, or receive any other unwanted communications you must use the built in facilities to block the messages. If there is a particular user causing a problem then use the ignore function to block further messages (to do this in runescape-classic point at the friends menu, click on the 'ignore' tab, click where it says 'click here to add a name' and enter the name of the user to block. In the main runescape game, click on the 'Ignore List' button, click where it says 'Add Name' and enter the name of the user to block). If you continue to receive unwanted messages, or receive harassment from multiple players you must use the privacy controls to block all messages from everyone except your friends (to do this In runescape-classic point at the configuration menu, and ensure all four privacy settings are switched to 'on'. In the main runescape game there are three buttons below the game window marked 'Public chat', Private chat', and 'Trade/duel'. To block anyone other than your friends you will need to click the buttons until they display 'Friends'. To block everyone, including friends for complete privacy, click them until they display 'Off'.). If you continue to suffer problems, or are not satisfied then you must stop using this web site.
 <p>
 <b>Cheating</b><br>
-Your use of RuneScape is also subject to our <a href="http://www.runescape.com/aff/runescape/guides/rules.html" class=c>Rules of Conduct</a>. You must not infringe these rules.
+Your use of RuneScape is also subject to our <a href="../guides/rules.html" class=c>Rules of Conduct</a>. You must not infringe these rules.
 <p>
 You must not exploit any cheats or errors which you find in RuneScape. Any cheats or errors which you discover must be reported immediately to us.
 <p>
@@ -216,23 +216,23 @@ Occasionally we may accept ideas and game additions that are submitted by users.
 <b>Subscription</b><br>
 Some contents and/or services on this website are subscription-based. If you elect to purchase subscription-based content/services and transmit to us a subscription purchase request, you warrant that all the information that you submit is true and accurate (including without limitation your credit card number and expiration date, and other payment details), and you agree to pay all subscription fees you incur including all applicable taxes.
 <p>
-We reserve the right to cancel your Subscription at any time with immediate effect if you breach any of these terms and conditions, or our <a href="http://www.runescape.com/aff/runescape/guides/rules.html" class=c>Rules of Conduct</a>.
+We reserve the right to cancel your Subscription at any time with immediate effect if you breach any of these terms and conditions, or our <a href="../guides/rules.html" class=c>Rules of Conduct</a>.
 <p>
-You may cancel your Subscription to any fee-based content and/or services by contacting <a href="http://www.runescape.com/aff/runescape/login.cgi" class=c>Customer Support</a>.
+You may cancel your Subscription to any fee-based content and/or services by contacting <a href="../login.php" class=c>Customer Support</a>.
 <p>
 Upon cancellation you will not be charged any further subscription fees, and you will not be refunded any subscription fees already paid, except that we reserve the right to charge you for any unauthorised use of your Subscription by third parties.
 <p>
 <b>Privacy Policy</b><br>
-By signing-up for an account you are opting-in to allow us to store personal information, cookies, etc. We shall comply with all applicable Data Protection laws in the UK. For a description of how we use your personal data, please see our <a href="http://www.runescape.com/aff/runescape/privacy/privacy.html" class=c>Privacy Policy</a>.
+By signing-up for an account you are opting-in to allow us to store personal information, cookies, etc. We shall comply with all applicable Data Protection laws in the UK. For a description of how we use your personal data, please see our <a href="../privacy/privacy.html" class=c>Privacy Policy</a>.
 <p>
 <b>Cookies</b><br>
-This website uses cookies to track your country (to enable locale enhanced information) and to track where you entered our site from. If you wish to opt-out of the use of these cookies <a href="http://www.runescape.com/aff/runescape/cookies.html" class=c>click here</a> for clear instructions.
+This website uses cookies to track your country (to enable locale enhanced information) and to track where you entered our site from. If you wish to opt-out of the use of these cookies <a href="../cookies.html" class=c>click here</a> for clear instructions.
 <p>
 <b>Availability</b><br>
 We will make reasonable commercial efforts to ensure that this web site is available 24 hours per day without any interruptions. However, we reserve the right to make this web site unavailable at any time or to restrict access to parts or all of this website without notice.
 <p>
 <b>Safety Guides</b><br>
-Before using our services you should read the guides found in our <a href="http://www.runescape.com/aff/runescape/guides/guides.html" class=c>Rules & Security</a> section. Of particular importance, please read the <a href="http://www.runescape.com/aff/runescape/guides/safety.html" class=c>safety guide</a> and the <a href="http://www.runescape.com/aff/runescape/guides/epilepsy.html" class=c>epilepsy warning</a>.
+Before using our services you should read the guides found in our <a href="../guides/guides.html" class=c>Rules & Security</a> section. Of particular importance, please read the <a href="../guides/guides/playsafely.html" class=c>safety guide</a> and the <a href="../guides/guides/healthepilepsy.htm" class=c>epilepsy warning</a>.
 <p>
 <b>Parental guidance</b><br>
 Whilst we reserve the right to monitor and take action upon inappropriate use of this web site (including the posting of inappropriate or offensive material via the chat facility or otherwise), we cannot guarantee that this web site will not contain any content provided by third parties that is inappropriate, offensive or otherwise objectionable.
@@ -268,10 +268,10 @@ If we fail to enforce any provision of these terms and conditions, that failure 
 Nothing in these terms and conditions affects your statutory rights as a consumer. These terms and conditions are governed by English law and any dispute connected with this is subject to the exclusive jurisdiction of the English courts.
 <p>
 <b>Copyright</b><br>
-For all cases of requests regarding use of graphics or the reproduction of Jagex/RuneScape material please see our <a href="http://www.runescape.com/aff/runescape/faq/copyrightfaq.html" class=c>Copyright FAQ</a>.
+For all cases of requests regarding use of graphics or the reproduction of Jagex/RuneScape material please see our <a href="../faq/faqindex.html" class=c>Copyright FAQ</a>.
 <p>
 <b>Complaints</b><br>
-If you are dissatisfied with this web site or any aspect of it, please contact <a href="http://www.runescape.com/aff/runescape/login.cgi" class=c>Customer Support</a>.
+If you are dissatisfied with this web site or any aspect of it, please contact <a href="../login.php" class=c>Customer Support</a>.
 <p>
                                     <center><br>
                                        <input type="button" value="I Agree"
