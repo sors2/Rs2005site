@@ -58,14 +58,14 @@ A.c:hover {text-decoration:underline}
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
 <meta content="runescape, free, games, online, multiplayer, magic, spells, java, MMORPG, MPORPG, gaming" name="Keywords">
 <link rel="shortcut icon" href="../../../../../../../../../../../../2003/Forums/work/work/favicon.ico">
-<link media="all" type="text/css" rel="stylesheet" href="Suggestion_files/main.css">
-<link href="Suggestion_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
+<link media="all" type="text/css" rel="stylesheet" href="OtherQueries_files/main.css">
+<link href="OtherQueries_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
 
 
 
-<table cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td valign="middle"><center><table cellpadding="0" cellspacing="0"><tbody><tr><td valign="top"><img src="Suggestion_files/edge_a.jpg" height="43" hspace="0" vspace="0" width="100"></td><td valign="top"><img src="Suggestion_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400"></td><td valign="top"><img src="Suggestion_files/edge_d.jpg" height="43" hspace="0" vspace="0" width="100"></td></tr></tbody></table><table background="Suggestion_files/background2.jpg" border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td valign="bottom"><center><table bgcolor="black" cellpadding="4" width="500"><tbody><tr><td class="e"><center>
+<table cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td valign="middle"><center><table cellpadding="0" cellspacing="0"><tbody><tr><td valign="top"><img src="OtherQueries_files/edge_a.jpg" height="43" hspace="0" vspace="0" width="100"></td><td valign="top"><img src="OtherQueries_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400"></td><td valign="top"><img src="OtherQueries_files/edge_d.jpg" height="43" hspace="0" vspace="0" width="100"></td></tr></tbody></table><table background="OtherQueries_files/background2.jpg" border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td valign="bottom"><center><table bgcolor="black" cellpadding="4" width="500"><tbody><tr><td class="e"><center>
 <div style="text-align: left; background: none;"><center><b>Secure Services</b> 
 - You are <?php if (isset($_SESSION['username'])):?>logged in as <font color="#ffbb22"><?php echo $_SESSION['username'];?></font><b>
 <br>Click the links by the top-left padlock for secure menu or logout</b></center>
@@ -89,7 +89,7 @@ A.c:hover {text-decoration:underline}
 										</center>
 										<br>
                                         <div style="float: left; text-align: left;">Use this form for queries that don't fit into any of the other categories.<br>
-										You may<a href="../../customersupport2.php" class="c">go back</a> if you think your query fits into another category.</div>
+										You may <a href="../../customersupport2.php" class="c">go back</a> if you think your query fits into another category.</div>
                                         <br>
 										<center>
 										<table width="400px">
@@ -124,7 +124,7 @@ A.c:hover {text-decoration:underline}
 </td></tr></tbody></table>                                                                 <table cellpadding="0" cellspacing="0">
                                                                         <tbody><tr>
                                                                                 <td valign="bottom">
-                                                                                        <img src="Suggestion_files/edge_g2.jpg" height="82" hspace="0" vspace="0" width="100">
+                                                                                        <img src="OtherQueries_files/edge_g2.jpg" height="82" hspace="0" vspace="0" width="100">
                                                                                 </td>
                                                                                 <td valign="bottom">
                                                                                         <div style="font-family:Arial,Helvetica,sans-serif; font-size:11px;" align="center">
@@ -134,10 +134,10 @@ Jagex Ltd<br>
                                                                         
                         To use our service you must agree to our <a href="../../../../../../../../../../../../2003/Forums/work/work/frame2.cgi?page=terms/terms.html" class="c">Terms+Conditions</a>  +   <a href="../../../../../../../../../../../../2003/Forums/work/work/frame2.cgi?page=privacy/privacy.html" class="c">Privacy policy</a>
                                                                                         </div>
-                                                                                        <img src="Suggestion_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400">
+                                                                                        <img src="OtherQueries_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400">
                                                                                 </td>
                                                                                 <td valign="bottom">
-                                                                                        <img src="Suggestion_files/edge_h2.jpg" height="82" hspace="0" vspace="0" width="100">
+                                                                                        <img src="OtherQueries_files/edge_h2.jpg" height="82" hspace="0" vspace="0" width="100">
                                                                                 </td>
                                                                         </tr>
                                                                 </tbody></table>
