@@ -417,23 +417,6 @@ $user_current = $result->fetch_assoc();
 
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
 
-<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
-    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
-        <div style="float: left;">
-            <IMG width=44 height=59 src="../../frame_files/lock.gif">
-        </div>
-        <?php if(isset($_SESSION['username'])):?>
-        <div style="float: left; padding-top: 8%; margin:left: 1%;">
-            <A href="../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
-            <A href="../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
-        </div>
-        <?php else:?>
-                <br>
-                <br>
-                <A href="../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
-        <?php endif?>
-    </div>
-<div>
 
    <table width=100% height=100% cellpadding=0 cellspacing=0>
       <tr>
