@@ -10,7 +10,7 @@ if(isset($_POST['submit'])){
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();;
 
-        $category = "Other";
+        $category = "Suggestion";
         $date = date("Y-m-d H:i:s");
         $stmt = $conn->prepare("INSERT INTO feedback (category, `date`, userID,`message`) VALUES (?,?,?,?)");
         $stmt->bind_param("ssis", $category, $date, $user['userID'],$message);
@@ -84,13 +84,23 @@ A.c:hover {text-decoration:underline}
                 <tbody>
                         <tr>
                                 <td class="e">  
-                                        <div style="float: left; text-align: left;">Use this form for queries that don't fit into any of the other categories.
-                                        <br>
-										You may <a href="customersupport2.php">go back</a> if you think your query fits into another category.
 										<center>
-										<table width="400px">>
+										<b>Feedback Support</b>
+										</center>
+										<br>
+                                        <div style="float: left; text-align: left;">If your comment does not fit this category then please select another category <a href="../Feedback.php" class="c">here</a>.
+                                        <br>
+										<center>
+										<table width="400px">
 										<tr>
-										<td>>
+										<td>
+										<b>Subject:</b> Suggestions
+										</td>
+										</tr>
+										<br>
+										<tr>
+										<td>
+										<br>
 										<b>Your comment:</b>
 										</td>
 										</tr>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 if(isset($_POST['submit'])){
-        include "../../../../connect.php";
-        $message = nl2br(htmlspecialchars($_POST['message']));
+        include "../../../connect.php";
+        $message = htmlspecialchars(nl2br($_POST['message']));
 
         $stmt = $conn->prepare("SELECT userID FROM users WHERE username = ?");
         $stmt->bind_param("s",$_SESSION['username']);
@@ -12,11 +12,11 @@ if(isset($_POST['submit'])){
 
         $category = "Other";
         $date = date("Y-m-d H:i:s");
-        $stmt = $conn->prepare("INSERT INTO feedback (category, `date`, userID,`message`) VALUES (?, ?, ?,?)");
-        $stmt->bind_param("ssis", $category,$date,$user['userID'],$message);
+        $stmt = $conn->prepare("INSERT INTO feedback (category, `date`, userID,`message`) VALUES (?,?,?,?)");
+        $stmt->bind_param("ssis", $category, $date, $user['userID'],$message);
         $stmt->execute();
 
-        header("Location: OtherQuerySubmit.php");
+        header("Location: QuerySubmit.php");
 }
 
 ?>
@@ -39,7 +39,7 @@ A{text-decoration:none}
 <style>
 BODY, P, TABLE, HTML
 { 
-   height:100%; 
+   height:100%;
    font-family:Arial,Helvetica,sans-serif;
    font-size:13px;
 }
@@ -57,23 +57,21 @@ A.c:hover {text-decoration:underline}
 <meta content="TRUE" name="MSSmartTagsPreventParsing">
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
 <meta content="runescape, free, games, online, multiplayer, magic, spells, java, MMORPG, MPORPG, gaming" name="Keywords">
-<link rel="shortcut icon" href="../../../../../../../../../../2003/Forums/work/work/favicon.ico">
-<link media="all" type="text/css" rel="stylesheet" href="OtherQueries_files/main.css">
-<link href="OtherQueries_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
+<link rel="shortcut icon" href="../../../../../../../../../../../../2003/Forums/work/work/favicon.ico">
+<link media="all" type="text/css" rel="stylesheet" href="Suggestion_files/main.css">
+<link href="Suggestion_files/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
 
-<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
 
 
-<table cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td valign="middle"><center><table cellpadding="0" cellspacing="0"><tbody><tr><td valign="top"><img src="OtherQueries_files/edge_a.jpg" height="43" hspace="0" vspace="0" width="100"></td><td valign="top"><img src="OtherQueries_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400"></td><td valign="top"><img src="OtherQueries_files/edge_d.jpg" height="43" hspace="0" vspace="0" width="100"></td></tr></tbody></table><table background="OtherQueries_files/background2.jpg" border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td valign="bottom"><center><table bgcolor="black" cellpadding="4" width="500"><tbody><tr><td class="e"><center>
+<table cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td valign="middle"><center><table cellpadding="0" cellspacing="0"><tbody><tr><td valign="top"><img src="Suggestion_files/edge_a.jpg" height="43" hspace="0" vspace="0" width="100"></td><td valign="top"><img src="Suggestion_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400"></td><td valign="top"><img src="Suggestion_files/edge_d.jpg" height="43" hspace="0" vspace="0" width="100"></td></tr></tbody></table><table background="Suggestion_files/background2.jpg" border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td valign="bottom"><center><table bgcolor="black" cellpadding="4" width="500"><tbody><tr><td class="e"><center>
 <div style="text-align: left; background: none;"><center><b>Secure Services</b> 
 - You are <?php if (isset($_SESSION['username'])):?>logged in as <font color="#ffbb22"><?php echo $_SESSION['username'];?></font><b>
 <br>Click the links by the top-left padlock for secure menu or logout</b></center>
 <?php else :?> logged in as <font color="#ffbb22"><?php echo $_SESSION['username'];?></font><b>
 <br>Click the links by the top-left padlock for secure menu or login</b></center>
 <?php endif?>
-		
 			
 </div></center>
 </td>
@@ -82,69 +80,46 @@ A.c:hover {text-decoration:underline}
 </table>
 </center>
 <center><br>
-<table bgcolor="black" border="0" cellpadding="5" width="500">
-    <tbody>
-        <tr>
-            <td class="e">  
-                <div style="float: left; text-align: left;">
-                
-                                                                                                                                        Use
-                                                                                                                                        this
-                                                                                                                                        form
-                                                                                                                                        for
-                                                                                                                                        queries
-                                                                                                                                        that
-                                                                                                                                        don't
-                                                                                                                                        fit
-                                                                                                                                        into
-                                                                                                                                        any
-                                                                                                                                        of
-                                                                                                                                        the
-                                                                                                                                        other
-                                                                                                                                        categories.
-                                                                                                                                        <br>You
-                                                                                                                                        may
-                                                                                                                                        <a href="../../customersupport2.php"
-                                                                                                                                                class="c">go
-                                                                                                                                                back</a>
-                                                                                                                                        if
-                                                                                                                                        you
-                                                                                                                                        think
-                                                                                                                                        your
-                                                                                                                                        query
-                                                                                                                                        fits
-                                                                                                                                        into
-                                                                                                                                        another
-                                                                                                                                        category.
-                <br>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-                <br>Your comment:
-                <br><textarea style="width:500px; height:150px;" id="charlimit_text" name="message" onkeyup="textLengthText();"></textarea>
-                <br><center>You have <span id="charlimit_count" style="display: inline;">1500</span> characters remaining for your message...
-                <br><input value="Submit Query" type="submit" name = "submit"></center>
-                </div>
-                </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="2" cellspacing="1" width="455"></td>
-
-
-
-
-	</tr>
-
-
-
-
-
+        <table bgcolor="black" border="0" cellpadding="5" width="500">
+                <tbody>
+                        <tr>
+                                <td class="e">  
+                                        <div style="float: left; text-align: left;">Use this form for queries that don't fit into any of the other categories.
+                                        <br>
+										You may <a href="customersupport2.php">go back</a> if you think your query fits into another category.
+										<center>
+										<table width="400px">>
+										<tr>
+										<td>>
+										<b>Your comment:</b>
+										</td>
+										</tr>
+										<tr>
+										<td>
+                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+										<textarea style="width:400px; height:150px; resize: none;" id="charlimit_text" name="message" onkeyup="textLengthText();"></textarea>
+                                        <br><center>You have <span id="charlimit_count" style="display: inline;">1500</span> characters remaining for your message...
+                                        <br><br><input value="Send query" type="submit" name = "submit"></center>
+										</td>
+										</tr>
+										</table>
+										<center>
+                                        </form>
+                                        </div>
+                                </td>
+                        </tr>
+                </tbody>
+        </table>
+                                
+                                
+                                
+<table border="0" cellpadding="2" cellspacing="1" width="455"><tbody><tr><td>
 
 </tbody></table><br></center>
 </td></tr></tbody></table>                                                                 <table cellpadding="0" cellspacing="0">
                                                                         <tbody><tr>
                                                                                 <td valign="bottom">
-                                                                                        <img src="OtherQueries_files/edge_g2.jpg" height="82" hspace="0" vspace="0" width="100">
+                                                                                        <img src="Suggestion_files/edge_g2.jpg" height="82" hspace="0" vspace="0" width="100">
                                                                                 </td>
                                                                                 <td valign="bottom">
                                                                                         <div style="font-family:Arial,Helvetica,sans-serif; font-size:11px;" align="center">
@@ -152,12 +127,12 @@ A.c:hover {text-decoration:underline}
                         This webpage and its contents is copyright 2005 
 Jagex Ltd<br>
                                                                         
-                        To use our service you must agree to our <a href="../../../../../../../../../../2003/Forums/work/work/frame2.cgi?page=terms/terms.html" class="c">Terms+Conditions</a>  +   <a href="../../../../../../../../../../2003/Forums/work/work/frame2.cgi?page=privacy/privacy.html" class="c">Privacy policy</a>
+                        To use our service you must agree to our <a href="../../../../../../../../../../../../2003/Forums/work/work/frame2.cgi?page=terms/terms.html" class="c">Terms+Conditions</a>  +   <a href="../../../../../../../../../../../../2003/Forums/work/work/frame2.cgi?page=privacy/privacy.html" class="c">Privacy policy</a>
                                                                                         </div>
-                                                                                        <img src="OtherQueries_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400">
+                                                                                        <img src="Suggestion_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400">
                                                                                 </td>
                                                                                 <td valign="bottom">
-                                                                                        <img src="OtherQueries_files/edge_h2.jpg" height="82" hspace="0" vspace="0" width="100">
+                                                                                        <img src="Suggestion_files/edge_h2.jpg" height="82" hspace="0" vspace="0" width="100">
                                                                                 </td>
                                                                         </tr>
                                                                 </tbody></table>
