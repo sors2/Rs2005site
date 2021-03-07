@@ -4,7 +4,7 @@ include "../ban.php";
 if(isset($_SESSION['username'])){
    if ($stmt->execute()) {
       $result = $stmt->get_result();
-      if(mysqli_num_rows($result)){
+      if(mysqli_num_rows($result) > 0){
          $ban = $result->fetch_assoc();
          $current = date("Y-m-d H:i:s");
          if($ban['expire'] > $current){

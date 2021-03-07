@@ -23,7 +23,7 @@ include "connect.php";
 
     // Check the ban details of the user
     $n = 1;
-    $query = ("SELECT max(userID),expire FROM bandetails WHERE userID = ? AND `type`=?");      
+    $query = ("SELECT expire FROM bandetails WHERE userID = ? AND `type` = ? ORDER BY `expire` DESC LIMIT 1");     
     if (!$stmt = mysqli_prepare($conn, $query))
     {
         echo "Error: ".$stmt->error;
