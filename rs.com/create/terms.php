@@ -232,7 +232,7 @@ This website uses cookies to track your country (to enable locale enhanced infor
 We will make reasonable commercial efforts to ensure that this web site is available 24 hours per day without any interruptions. However, we reserve the right to make this web site unavailable at any time or to restrict access to parts or all of this website without notice.
 <p>
 <b>Safety Guides</b><br>
-Before using our services you should read the guides found in our <a href="../guides/guides.html" class=c>Rules & Security</a> section. Of particular importance, please read the <a href="../guides/guides/playsafely.html" class=c>safety guide</a> and the <a href="../guides/guides/healthepilepsy.htm" class=c>epilepsy warning</a>.
+Before using our services you should read the guides found in our <a href="../guides/guides.html" class=c>Rules & Security</a> section. Of particular importance, please read the <a href="../guides/guides/playsafely.htm" class=c>safety guide</a> and the <a href="../guides/guides/healthepilepsy.htm" class=c>epilepsy warning</a>.
 <p>
 <b>Parental guidance</b><br>
 Whilst we reserve the right to monitor and take action upon inappropriate use of this web site (including the posting of inappropriate or offensive material via the chat facility or otherwise), we cannot guarantee that this web site will not contain any content provided by third parties that is inappropriate, offensive or otherwise objectionable.
