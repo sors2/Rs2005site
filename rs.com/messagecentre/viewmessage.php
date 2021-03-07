@@ -64,11 +64,11 @@
                <table cellpadding=0 cellspacing=0>
                   <tr>
                      <td valign=top>
-					 <img src="../../img/edge_a.jpg" width=100 height=82 hspace=0 vspace=0></td>
+					 <img src="../../img/edge_a.jpg" width=100 height=42 hspace=0 vspace=0></td>
                      <td valign=top>
 					 <img src="../../img/edge_c.jpg" width=400 height=42 hspace=0 vspace=0></td>
                      <td valign=top>
-					 <img src="../../img/edge_d.jpg" width=100 height=82 hspace=0 vspace=0></td>
+					 <img src="../../img/edge_d.jpg" width=100 height=42 hspace=0 vspace=0></td>
                   </tr>
                </table>
                <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../img/background2.jpg>
