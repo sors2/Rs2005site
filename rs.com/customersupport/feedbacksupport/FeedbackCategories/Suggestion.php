@@ -63,23 +63,7 @@ A.c:hover {text-decoration:underline}
 </head>
 <body style="margin:0" alink="#90c040" bgcolor="black" link="#90c040" text="white" vlink="#90c040">
 
-<div style="width:100%; height:100%; display:grid; grid-auto-flow: column;  grid-template-columns: 30% 40%;">
-    <div style="width: 30%; overflow: hidden; background-color: #222233; float: left;">
-        <div style="float: left;">
-            <IMG width=44 height=59 src="../../../frame_files/lock.gif">
-        </div>
-        <?php if(isset($_SESSION['username'])):?>
-        <div style="float: left; padding-top: 8%; margin:left: 1%;">
-            <A href="../../../securemenu/securemenu.php" style="text-decoration: underline;" class="c" ><FONT color=white>Secure Menu</FONT></A><BR><br>
-            <A href="../../../logout.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Logout</FONT></A></TD>
-        </div>
-        <?php else:?>
-                <br>
-                <br>
-                <A href="../../../login.php" style="text-decoration: underline; margin-left:20%;" class="c" ><FONT color=white>Login</FONT></A></TD>
-        <?php endif?>
-    </div>
-<div>
+
 
 <table cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td valign="middle"><center><table cellpadding="0" cellspacing="0"><tbody><tr><td valign="top"><img src="Suggestion_files/edge_a.jpg" height="43" hspace="0" vspace="0" width="100"></td><td valign="top"><img src="Suggestion_files/edge_c.jpg" height="42" hspace="0" vspace="0" width="400"></td><td valign="top"><img src="Suggestion_files/edge_d.jpg" height="43" hspace="0" vspace="0" width="100"></td></tr></tbody></table><table background="Suggestion_files/background2.jpg" border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td valign="bottom"><center><table bgcolor="black" cellpadding="4" width="500"><tbody><tr><td class="e"><center>
 <div style="text-align: left; background: none;"><center><b>Secure Services</b> 
