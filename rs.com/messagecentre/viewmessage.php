@@ -52,7 +52,7 @@
       name="Keywords">
    <link rel="shortcut icon" href="favicon.ico">
    <link media="all" type="text/css" rel="stylesheet" href="css/main.css">
-   <link href="css/forum-3.css" rel="stylesheet" type="text/css" media="all">
+   <link href="../../css/forum-3.css" rel="stylesheet" type="text/css" media="all">
 </head>
  
 <body bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin:0">
@@ -63,12 +63,12 @@
             <center>
                <table cellpadding=0 cellspacing=0>
                   <tr>
-                     <td valign=top><img src=img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
-                     <td valign=top><img src=img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
-                     <td valign=top><img src=img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><../../img src=img/edge_a.jpg width=100 height=43 hspace=0 vspace=0></td>
+                     <td valign=top><../../img src=img/edge_c.jpg width=400 height=42 hspace=0 vspace=0></td>
+                     <td valign=top><../../img src=img/edge_d.jpg width=100 height=43 hspace=0 vspace=0></td>
                   </tr>
                </table>
-               <table width=600 cellpadding=0 cellspacing=0 border=0 background=img/background2.jpg>
+               <table width=600 cellpadding=0 cellspacing=0 border=0 background=../../img/background2.jpg>
                   <tr>
                      <td valign=bottom>
                         <center>
@@ -103,15 +103,15 @@
                                        <table border="0" align="center" width="50%">
                                           <tr>
                                              <!-- Row 1 -->
-                                             <td><img class="imiddle" title="first" alt="first" src="img/first.png"
+                                             <td><img class="imiddle" title="first" alt="first" src="../../img/first.png"
                                                    hspace="0" height="13" border="0" width="26"></td><!-- Col 1 -->
                                              <td><img class="imiddle" title="previous" alt="previous"
                                                    src="img/previous.png" hspace="0" height="13" border="0" width="26">
                                              </td><!-- Col 2 -->
                                              <td>page <input size="3" id="uid" value="2"> of 3</td><!-- Col 3 -->
-                                             <td><img class="imiddle" title="next" alt="next" src="img/next.png"
+                                             <td><img class="imiddle" title="next" alt="next" src="../../img/next.png"
                                                    hspace="0" height="13" border="0" width="26"></td><!-- Col 4 -->
-                                             <td><img class="imiddle" title="last" alt="last" src="img/last.png"
+                                             <td><img class="imiddle" title="last" alt="last" src="../../img/last.png"
                                                    hspace="0" height="13" border="0" width="26"></td><!-- Col 5 -->
                                           </tr>
                                           <center>
@@ -162,7 +162,7 @@
                                                             <tr>
                                                                <td>
                                                                   <a href="deletemessage.php?messageID=<?php echo $messageID;?>"
-                                                                     class="c"><img src="img/delete.png"
+                                                                     class="c"><img src="../../img/delete.png"
                                                                         style="vertical-align: middle;"
                                                                         alt="Permanently delete this message" border="0"
                                                                         height="11" width="18"></a>
@@ -193,7 +193,7 @@
                            <table cellpadding=0 cellspacing=0>
                               <tr>
                                  <td valign=bottom>
-                                    <img src=img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
+                                    <img src=../../img/edge_g2.jpg width=100 height=82 hspace=0 vspace=0>
                                  </td>
                                  <td valign=bottom>
                                     <div align=center style="font-family:Arial,Helvetica,sans-serif; font-size:11px;">
@@ -202,10 +202,10 @@
                                           href="frame2.cgi?page=terms/terms.html" class=c>Terms+Conditions</a> + <a
                                           href="frame2.cgi?page=privacy/privacy.html" class=c>Privacy policy</a>
                                     </div>
-                                    <img src=img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
+                                    <img src=../../img/edge_c.jpg width=400 height=42 hspace=0 vspace=0>
                                  </td>
                                  <td valign=bottom>
-                                    <img src=img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
+                                    <img src=../../img/edge_h2.jpg width=100 height=82 hspace=0 vspace=0>
                                  </td>
                               </tr>
                            </table>
